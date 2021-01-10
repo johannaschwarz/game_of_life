@@ -42,9 +42,6 @@ Algorithmus:
 
 #include <stdio.h>
 
-void print(void) {
-        printf("Hallo!\n");
-}
 
 int main (void)
 {

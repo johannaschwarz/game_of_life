@@ -1,5 +1,5 @@
 /*
-Benutzereingabe:
+Benutzereingabe: Hi 
         1. möchte Nutzer randomisierte Anfangsgeneration oder Nutzer definierte?
         2.
         randomisierte:

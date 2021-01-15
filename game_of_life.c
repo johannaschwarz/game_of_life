@@ -1,5 +1,5 @@
 /*
-Benutzereingabe: Hi 
+Benutzereingabe:
         1. möchte Nutzer randomisierte Anfangsgeneration oder Nutzer definierte?
         2.
         randomisierte:
@@ -37,22 +37,37 @@ Algorithmus:
                 != 3 * = tot
                 = 3 * = lebendig
 
+                char raster[10][10] = {"*-------**","***----**-"};
+                printf("%i\n", '-');
+                for (i = 0; i < 2; ++i) {
+                        for (j = 0; j < 10; ++j) {
+                                printf("%c", raster[i][j]);
+                        }
+                        printf("\n");
+                }
 
 */
-
-#include <stdio.h>
-
+#include "benutzereingaben.h"
+#include "funktionen.h"
 
 int main (void)
 {
-        int i, j;
-        char raster[10][10] = {"*-------**","***----**-"};
-        printf("%i\n", '-');
-        for (i = 0; i < 2; ++i) {
-                for (j = 0; j < 10; ++j) {
-                        printf("%c", raster[i][j]);
-                }
-                printf("\n");
+        int **matrix;
+
+        srand(time(NULL));
+        main_instruction();
+        user_defined();
+
+        matrix = init();
+
+        if (matrix == NULL) {
+                printf("\nSpeicherfehler\n");
+                main_instruction();
         }
+
+        random_generation(matrix);
+        print(matrix);
+        destroy(matrix);
+
         return 0;
 }

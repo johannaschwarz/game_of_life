@@ -3,7 +3,7 @@
 void user_defined(void)
 {
         int i, j;
-        printf("\nGebe %lu Zeichenketten mit jeweils %lu Zeichen an.\n", MAXROW, MAXCOL);
+        printf("\nGebe %lu Zeichenketten mit jeweils %lu Zeichen an.\n", ROW, COL);
         printf("Die Zeichenketten sollen durch ',' getrennt sein.\n");
         printf("Andere Zeichen sind nicht erlaubt.\n");
         printf("Beispiel:\n");
@@ -27,7 +27,7 @@ void user_defined(void)
 void main_instruction(void)
 {
         printf("\n");
-        printf("Das Spielfeld besteht aus %lu Zeilen und %lu Reihen\n", MAXROW, MAXCOL);
+        printf("Das Spielfeld besteht aus %lu Zeilen und %lu Reihen\n", ROW, COL);
         printf("* steht fuer lebendige Zellen.\n");
         printf("- steht fuer tote Zellen.\n");
         printf("Wollen Sie die Anfangsgeneration selbst definieren? Geben Sie 'y' fuer ja, 'n' fuer nein ein.\n");

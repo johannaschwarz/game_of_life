@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAXCOL 10
-#define MAXROW 10
+#define COL 10
+#define ROW 10
 
 void user_defined(void);
 void main_instruction(void);

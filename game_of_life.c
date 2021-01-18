@@ -81,7 +81,7 @@ int main (void)
         }
 
         while (status == 0) {
-        printf("Wie viele Generationen moechten Sie generieren? Geben Sie eine ganze Zahl ein.\n");
+        printf("Wie viele Generationen moechten Sie generieren? Geben Sie eine natürliche Zahl ein.\n");
         status = scanf("%i", &anzahl_gen);
         if (status == 0 || getchar() != '\n') {
                 flush();

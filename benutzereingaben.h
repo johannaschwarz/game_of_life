@@ -4,12 +4,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include "funktionen.h"
 
 #define COL 10
 #define ROW 10
 
-void user_defined(void);
-void main_instruction(void);
+int user_defined(int ***matrix);
+int main_instruction(void);
 
 
 

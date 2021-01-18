@@ -53,20 +53,45 @@ Algorithmus:
 int main (void)
 {
         int **matrix;
+        int nutzer_def, x, anzahl_gen, status = 0;
 
         srand(time(NULL));
-        main_instruction();
-        user_defined();
 
-        matrix = init();
+        matrix = int_init();
 
         if (matrix == NULL) {
                 printf("\nSpeicherfehler\n");
                 main_instruction();
         }
 
-        random_generation(matrix);
+        nutzer_def = main_instruction();
+
+        /*Nutzerdefinierte Matrix*/
+        while (nutzer_def == 1) {
+                x = user_defined(&matrix);
+                nutzer_def = 0;
+                if (x == 0) {
+                        nutzer_def = main_instruction();
+                }
+        }
+
+        /*Randomisierte Matrix*/
+        if (nutzer_def == 0) {
+                random_generation(matrix);
+        }
+
+        while (status == 0) {
+        printf("Wie viele Generationen moechten Sie generieren? Geben Sie eine ganze Zahl ein.\n");
+        status = scanf("%i", &anzahl_gen);
+        if (status == 0 || getchar() != '\n') {
+                flush();
+                status = 0;
+                printf("Fehlerhafte Eingabe!\n");
+                }
+        }
+
         print(matrix);
+
         destroy(matrix);
 
         return 0;

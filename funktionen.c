@@ -1,15 +1,15 @@
 #include "funktionen.h"
 
 
-int ** init(void)
+int ** int_init(void)
 {
         int i, j;
-        int **m = malloc(ROW * sizeof(int*));
+        int **m = calloc(ROW, sizeof(int*));
         if (m == NULL) {
                 return NULL;
         }
         for (i = 0; i < COL; i++) {
-                m[i] = malloc(COL * sizeof(int));
+                m[i] = calloc(COL, sizeof(int));
                 if (m[i] == NULL) {
                         for (j = 0; j < i; j++) {
                                 free(m[j]);
@@ -21,6 +21,25 @@ int ** init(void)
         return m;
 }
 
+char ** char_init(void)
+{
+        int i, j;
+        char **m = malloc(ROW * sizeof(char*));
+        if (m == NULL) {
+                return NULL;
+        }
+        for (i = 0; i < COL; i++) {
+                m[i] = malloc(COL * sizeof(char));
+                if (m[i] == NULL) {
+                        for (j = 0; j < i; j++) {
+                                free(m[j]);
+                        }
+                        free(m);
+                        return NULL;
+                }
+        }
+        return m;
+}
 void random_generation(int **m)
 {
         int i, j;
@@ -35,7 +54,8 @@ void random_generation(int **m)
         }
 }
 
-void print(int **m) {
+void print(int **m)
+{
         int i, j;
         for (i = 0; i < ROW; i++) {
                 for (j = 0; j < COL; j++) {
@@ -45,10 +65,18 @@ void print(int **m) {
         }
 }
 
-void destroy(int **m) {
+void destroy(int **m)
+{
         int i;
         for (i = 0; i < ROW; i++) {
                 free(m[i]);
         }
         free(m);
+}
+
+void flush(void)
+{
+        while (getchar() != '\n'){
+
+        }
 }

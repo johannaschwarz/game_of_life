@@ -3,6 +3,8 @@
 
 #include "benutzereingaben.h"
 
+int ** gen_berechnen(int **m);
+int zaehlen(int **m, int r, int c);
 int ** int_init(void);
 char ** char_init(void);
 void random_generation(int **m);

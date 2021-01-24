@@ -52,23 +52,27 @@ Algorithmus:
 
 int main (void)
 {
-        int **matrix;
-        int nutzer_def, x, anzahl_gen, status = 0;
-
+        /*Variablen anlegen*/
+        int **matrix, **m;
+        int nutzer_def, x, anzahl_gen, status = 0, i = 0;
         srand(time(NULL));
 
+        /*Speicher fuer die Matrix reservieren*/
         matrix = int_init();
+        m = int_init();
 
         if (matrix == NULL) {
                 printf("\nSpeicherfehler\n");
                 main_instruction();
         }
 
+        /*Nutzerabfragen und Anleitung*/
         nutzer_def = main_instruction();
 
         /*Nutzerdefinierte Matrix*/
         while (nutzer_def == 1) {
                 x = user_defined(&matrix);
+                /*falls Definition durch Nutzer fehlschlaegt*/
                 nutzer_def = 0;
                 if (x == 0) {
                         nutzer_def = main_instruction();
@@ -80,9 +84,11 @@ int main (void)
                 random_generation(matrix);
         }
 
+        /*Nutzerabfrage: Anzahl an Generationen*/
         while (status == 0) {
-        printf("Wie viele Generationen moechten Sie generieren? Geben Sie eine natürliche Zahl ein.\n");
+        printf("Wie viele Generationen moechten Sie generieren? Geben Sie eine natuerliche Zahl ein.\n");
         status = scanf("%i", &anzahl_gen);
+        /*falls einlesen der Generationenanzahl fehlschlaegt*/
         if (status == 0 || getchar() != '\n') {
                 flush();
                 status = 0;
@@ -90,9 +96,25 @@ int main (void)
                 }
         }
 
+        /*Anfangsgeneration ausgeben*/
+        printf("\nAnfangsgeneration:\n\n");
         print(matrix);
 
-        destroy(matrix);
+        /*folge Generationen ausgeben*/
+        while (i < anzahl_gen) {
+                printf("a\n");
+                m = gen_berechnen(matrix);
+                if (m == NULL) {
+                        printf("Fehler beim Generieren der Folgegeneration\n");
+                } else {
+                        matrix = m;
+                        printf("%i.te Folgegeneration:\n\n", i + 1);
+                        print(matrix);
+                }
+                i++;
+        }
 
+
+        destroy(matrix);
         return 0;
 }

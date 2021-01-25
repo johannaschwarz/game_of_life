@@ -22,9 +22,9 @@ int user_defined(int ***m)
         for (j = 0; j < 2; j++) {
                 for (i = 0; i < COL; ++i) {
                         if ((rand() % 3) == 0) {
-                                printf("*");
+                                printf("%c", ALIVE);
                         } else {
-                                printf("-");
+                                printf("%c", DEAD);
                         }
                 }
                 if (j == 0) {
@@ -69,10 +69,10 @@ int user_defined(int ***m)
         /*Zwischenmatrix an Endmatrix übergeben*/
         for (j = 0; j < ROW; ++j) {
                 for (n = 0; n < COL; ++n) {
-                        if (transition[j][n] == '*') {
-                                matrix[j][n] = 42;
-                        } else if (transition[j][n] == '-') {
-                                matrix[j][n] = 45;
+                        if (transition[j][n] == ALIVE) {
+                                matrix[j][n] = ALIVE;
+                        } else if (transition[j][n] == DEAD) {
+                                matrix[j][n] = DEAD;
                         } else {
                                 printf("Fehlerhafte Eingabe!\n");
                                 return 0;
@@ -91,9 +91,11 @@ int main_instruction(void)
         /*Anleitung fuer Nutzer*/
         printf("\n");
         printf("Das Spielfeld besteht aus %d Zeilen und %d Reihen\n", ROW, COL);
-        printf("* steht fuer lebendige Zellen.\n");
-        printf("- steht fuer tote Zellen.\n");
-        printf("Wollen Sie die Anfangsgeneration selbst definieren? Geben Sie 'y' fuer ja, 'n' fuer nein ein. Druecken Sie 2x Enter.\n");
+        printf("%c steht fuer lebendige Zellen.\n", ALIVE);
+        printf("%c steht fuer tote Zellen.\n", DEAD);
+        printf("Wollen Sie die Anfangsgeneration selbst definieren? Geben Sie 'y' fuer ja, 'n' fuer nein ein.\n");
+        printf("Um das Programm abzubrechen, geben Sie x ein\n");
+        printf("Druecken Sie 2x Enter.\n");
 
         /*Auswertung der Nutzereingabe*/
         c = getchar();
@@ -109,8 +111,12 @@ int main_instruction(void)
         } else if (c == 'n') {
                 flush();
                 return 0;
-        } else {
+        } else if (c == 'x') {
                 flush();
-                main_instruction();
+                return -1;
         }
+
+        flush();
+        return main_instruction();
+
 }

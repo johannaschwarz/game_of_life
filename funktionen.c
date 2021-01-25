@@ -1,7 +1,7 @@
 #include "funktionen.h"
 /*
 Algorithmus:
-        1. Matrize mit 42 als lebendige Zelle; 45 als tote Zelle
+        1. Matrize mit ALIVE als lebendige Zelle; DEAD als tote Zelle
         2. Zelle [j][i]
                 counter = 0;
                 für jeden lebendigen Nachbarn ++counter
@@ -32,7 +32,7 @@ Algorithmus:
 
 int ** gen_berechnen(int **matrix)
 {
-        int i, j, counter;
+        int i, j, counter, survivors = 0;
         int **m;
         /*Werte an Zwischenzeiger übergeben*/
         m = int_init();
@@ -40,33 +40,40 @@ int ** gen_berechnen(int **matrix)
         for (i = 0; i < ROW; i++) {
                 for (j = 0; j < COL; j++) {
                         m[i][j] = matrix[i][j];
+                        if (m[i][j] == ALIVE) {
+                                ++survivors;
+                        }
                         /*printf("%c", m[i][j]);*/
                 }
                 /*printf("\n");*/
         }
 
+        if (survivors == 0) {
+                printf("Alle Zellen sind tot.\n");
+                return NULL;
+        }
+
         /*Folgegeneration berechnen */
-        for (i = 1; i < ROW - 1; ++i) {
-                for (j = 1; j < COL - 1; ++j) {
+        for (i = 0; i < ROW; ++i) {
+                for (j = 0; j < COL; ++j) {
                         counter = zaehlen(m, i, j);
                         /*bei toter Zelle*/
-                        if (m[i][j] == 45) {
+                        if (m[i][j] == DEAD) {
                                 if (counter == 3) {
                                         /*Zelle wird geboren*/
-                                        m[i][j] = 42;
+                                        m[i][j] = ALIVE;
                                 }
                         /*bei lebendiger Zelle*/
-                        } else if (m[i][j] == 42){
+                        } else if (m[i][j] == ALIVE){
                                 if (counter < 2 || counter > 3) {
                                         /*Zelle stirbt*/
-                                        m[i][j] = 45;
+                                        m[i][j] = DEAD;
                                 }
                         } else {
+                                printf("Fehler beim Generieren der Folgegeneration\n");
                                 return NULL;
                         }
-                printf("%c", m[i][j]);
                 }
-                printf("\n");
         }
         return m;
 }
@@ -85,8 +92,9 @@ int zaehlen(int **m, int r, int c)
                         if (i == r && j == c) {
                                 continue;
                         }
+                        /*printf("Mod i:%i\n Mod j: %i\n", (ROW + i) % ROW, (COL + j) % COL);*/
                         /*Zaehlen der lebendigen Zellen um die gesuchte Zelle herum*/
-                        if (m[i][j] == 42) {
+                        if (m[(ROW +i) % ROW][(COL + j) % COL] == ALIVE) {
                                 ++counter;
                         }
                 }
@@ -138,10 +146,10 @@ void random_generation(int **m)
         int i, j;
         for (i = 0; i < ROW; ++i) {
                 for (j = 0; j < COL; ++j) {
-                        if ((rand() % 2) == 0) {
-                                m[i][j] = '*';
+                        if ((rand() % 6) == 0) {
+                                m[i][j] = ALIVE;
                         } else {
-                                m[i][j] = '-';
+                                m[i][j] = DEAD;
                         }
                 }
         }
@@ -152,7 +160,7 @@ void print(int **m)
         int i, j;
         for (i = 0; i < ROW; i++) {
                 for (j = 0; j < COL; j++) {
-                        printf("%c", m[i][j]);
+                        printf("%c  ", m[i][j]);
                 }
                 printf("\n");
         }

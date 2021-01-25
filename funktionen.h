@@ -1,7 +1,10 @@
 #ifndef FUNKTIONEN_H_INCLUDED
 #define FUNKTIONEN_H_INCLUDED
 
+
 #include "benutzereingaben.h"
+#define DEAD 46
+#define ALIVE 42
 
 int ** gen_berechnen(int **m);
 int zaehlen(int **m, int r, int c);

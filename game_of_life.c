@@ -69,20 +69,36 @@ int main (void)
         /*Nutzerabfragen und Anleitung*/
         nutzer_def = main_instruction();
 
-        /*Nutzerdefinierte Matrix*/
-        while (nutzer_def == 1) {
-                x = user_defined(&matrix);
-                /*falls Definition durch Nutzer fehlschlaegt*/
-                nutzer_def = 0;
-                if (x == 0) {
-                        nutzer_def = main_instruction();
-                }
+        if (nutzer_def == -1) {
+                printf("Programm wird abgebrochen.\n");
+                return 0;
         }
 
         /*Randomisierte Matrix*/
         if (nutzer_def == 0) {
                 random_generation(matrix);
         }
+
+        /*Nutzerdefinierte Matrix*/
+        while (nutzer_def == 1) {
+                x = user_defined(&matrix);
+                /*falls Definition durch Nutzer fehlschlaegt*/
+                nutzer_def = 3;
+                if (x == 0) {
+                        nutzer_def = main_instruction();
+
+                }
+        }
+        if (nutzer_def == -1) {
+                printf("Programm wird abgebrochen.\n");
+                return 0;
+        }
+
+        /*Randomisierte Matrix*/
+        if (nutzer_def == 0) {
+                random_generation(matrix);
+        }
+
 
         /*Nutzerabfrage: Anzahl an Generationen*/
         while (status == 0) {
@@ -102,13 +118,13 @@ int main (void)
 
         /*folge Generationen ausgeben*/
         while (i < anzahl_gen) {
-                printf("a\n");
                 m = gen_berechnen(matrix);
                 if (m == NULL) {
-                        printf("Fehler beim Generieren der Folgegeneration\n");
+                        printf("Programm wird beendet.\n");
+                        return 0;
                 } else {
                         matrix = m;
-                        printf("%i.te Folgegeneration:\n\n", i + 1);
+                        printf("\n%i.te Folgegeneration:\n\n", i + 1);
                         print(matrix);
                 }
                 i++;

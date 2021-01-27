@@ -9,15 +9,42 @@ int text_defined(int ***m)
         int **matrix = int_init();
         int i, j , n;
 
-        /*Einlesen der Datei*/
+        /*Einlesen des Namens der Datei*/
         printf("Geben Sie den Namen der Textdatei ein.\n");
         name = read_string();
+
+        /*Bei Fehler*/
+        if (name == NULL) {
+                printf("Name konnte nicht gelesen werden.\n");
+                free(name);
+                return 0;
+        }
         printf("Eingelesener Name: %s\n", name);
+
+        /*Strom aus Datei lesen*/
         text = fopen(name, "r");
 
-        fscanf(text, "%s", &input);
+        /*Bei Fehler*/
+        if (text == NULL) {
+                printf("Datei konnte nicht geöffnet werden.\n");
+                free(name);
+                return 0;
+        }
+
+        /*Strom in String überführen*/
+        i = fscanf(text, "%s", input);
+
+        /*Bei Fehler*/
+        if (i == EOF) {
+                printf("Pufferfehler beim Auslesen der Datei\n");
+                flush_buff();
+                free(name);
+                return 0;
+        }
 
         printf("%s\n", input);
+
+        fclose(text);
 
         /*in Zwischenmatrix speichern*/
         i = 0;
@@ -29,6 +56,7 @@ int text_defined(int ***m)
         }
         if (strtok(NULL, ",") != NULL) {
                 printf("Formatfehler\n");
+                free(name);
                 return 0;
         }
 
@@ -42,11 +70,13 @@ int text_defined(int ***m)
                                 matrix[j][n] = DEAD;
                         } else {
                                 printf("Uebertragung in int-Matrix funktioniert nicht!\n");
+                                free(name);
                                 return 0;
                         }
                 }
         }
         printf("\n");
+
         *m = matrix;
         free(name);
         return 1;

@@ -33,14 +33,26 @@ Algorithmus:
 int ** gen_berechnen(int **matrix)
 {
         int i, j, counter, survivors = 0;
-        int **m;
+        int **m, **n;
         /*Werte an Zwischenzeiger übergeben*/
         m = int_init();
+        n = int_init();
 
         for (i = 0; i < ROW; i++) {
                 for (j = 0; j < COL; j++) {
                         m[i][j] = matrix[i][j];
                         if (m[i][j] == ALIVE) {
+                                ++survivors;
+                        }
+                        /*printf("%c", m[i][j]);*/
+                }
+                /*printf("\n");*/
+        }
+
+        for (i = 0; i < ROW; i++) {
+                for (j = 0; j < COL; j++) {
+                        n[i][j] = matrix[i][j];
+                        if (n[i][j] == ALIVE) {
                                 ++survivors;
                         }
                         /*printf("%c", m[i][j]);*/
@@ -61,13 +73,13 @@ int ** gen_berechnen(int **matrix)
                         if (m[i][j] == DEAD) {
                                 if (counter == 3) {
                                         /*Zelle wird geboren*/
-                                        m[i][j] = ALIVE;
+                                        n[i][j] = ALIVE;
                                 }
                         /*bei lebendiger Zelle*/
                         } else if (m[i][j] == ALIVE){
                                 if (counter < 2 || counter > 3) {
                                         /*Zelle stirbt*/
-                                        m[i][j] = DEAD;
+                                        n[i][j] = DEAD;
                                 }
                         } else {
                                 printf("Fehler beim Generieren der Folgegeneration\n");
@@ -75,7 +87,7 @@ int ** gen_berechnen(int **matrix)
                         }
                 }
         }
-        return m;
+        return n;
 }
 /*
 int rand_zaehlen(int **m, int r, int c) {
@@ -87,16 +99,22 @@ char * read_string() {
         char c = getchar();
         int i = 0;
         char *string = malloc((i + 1) * sizeof(char));
+        if (string == NULL) {
+                flush();
+                return NULL;
+        }
         while (c != '\n') {
                 string[i] = c;
                 c = getchar();
                 ++i;
                 string = realloc(string, (i + 1) * sizeof(char));
                 if (string == NULL) {
+                        flush();
                         return NULL;
                 }
         }
         string[i] = '\0';
+        flush();
         return string;
 }
 
@@ -197,4 +215,11 @@ void flush(void)
         while (getchar() != '\n'){
 
         }
+}
+
+int flush_buff(void)
+{
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF) {}
+        return c != EOF;
 }

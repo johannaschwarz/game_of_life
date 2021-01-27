@@ -15,5 +15,6 @@ void random_generation(int **m);
 void print(int **m);
 void destroy(int **m);
 void flush(void);
+int flush_buff(void);
 
 #endif

@@ -7,6 +7,7 @@
 #define ALIVE 42
 
 int ** gen_berechnen(int **m);
+char * read_string();
 int zaehlen(int **m, int r, int c);
 int ** int_init(void);
 char ** char_init(void);

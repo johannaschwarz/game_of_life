@@ -1,9 +1,61 @@
 #include "benutzereingaben.h"
 
+int text_defined(int ***m)
+{
+        FILE * text;
+        char input[ROW * COL + ROW];
+        char *name;
+        char **transition = char_init();
+        int **matrix = int_init();
+        int i, j , n;
+
+        /*Einlesen der Datei*/
+        printf("Geben Sie den Namen der Textdatei ein.\n");
+        name = read_string();
+        printf("Eingelesener Name: %s\n", name);
+        text = fopen(name, "r");
+
+        fscanf(text, "%s", &input);
+
+        printf("%s\n", input);
+
+        /*in Zwischenmatrix speichern*/
+        i = 0;
+        transition[i] = strtok(input, ",");
+        printf("%s\n", transition[i]);
+        for (i = 1; i < ROW; i++) {
+                transition[i] = strtok(NULL, ",");
+                printf("%s\n", transition[i]);
+        }
+        if (strtok(NULL, ",") != NULL) {
+                printf("Formatfehler\n");
+                return 0;
+        }
+
+
+        /*Zwischenmatrix an Endmatrix übergeben*/
+        for (j = 0; j < ROW; ++j) {
+                for (n = 0; n < COL; ++n) {
+                        if (transition[j][n] == ALIVE) {
+                                matrix[j][n] = ALIVE;
+                        } else if (transition[j][n] == DEAD) {
+                                matrix[j][n] = DEAD;
+                        } else {
+                                printf("Uebertragung in int-Matrix funktioniert nicht!\n");
+                                return 0;
+                        }
+                }
+        }
+        printf("\n");
+        *m = matrix;
+        free(name);
+        return 1;
+}
+
 int user_defined(int ***m)
 {
         int i, j, n;
-        char *input;
+        char input[ROW * COL + ROW];
         char c;
         char **transition = char_init();
         int **matrix = int_init();
@@ -33,38 +85,34 @@ int user_defined(int ***m)
         }
         printf("\n\n");
 
-        /*dynamisch Speicher reservieren*/
-        input = malloc((ROW * COL + ROW) * sizeof(int));
-        if (input == NULL) {
-                printf("Speicherfehler\n");
-                return 0;
-        }
-
         /*Nutzerdefinierte Matrix einlesen*/
         i = 0;
         c = getchar();
         while (c != '\n') {
-                *(input + i) = c;
+                input[i] = c;
                 c = getchar();
                 ++i;
         }
-        *(input + i) = '\0';
+        input[i] = '\0';
 
         if (i != (ROW * COL + ROW - 1)) {
-                printf("Fehlerhafte Eingabe!\n");
+                printf("Zeichenkette: Fehlerhafte Eingabe!\n");
                 return 0;
         }
 
         /*in Zwischenmatrix speichern*/
         i = 0;
         transition[i] = strtok(input, ",");
+        printf("%s\n", transition[i]);
         for (i = 1; i < ROW; i++) {
                 transition[i] = strtok(NULL, ",");
+                printf("%s\n", transition[i]);
         }
         if (strtok(NULL, ",") != NULL) {
                 printf("Formatfehler\n");
                 return 0;
         }
+
 
         /*Zwischenmatrix an Endmatrix übergeben*/
         for (j = 0; j < ROW; ++j) {
@@ -74,7 +122,7 @@ int user_defined(int ***m)
                         } else if (transition[j][n] == DEAD) {
                                 matrix[j][n] = DEAD;
                         } else {
-                                printf("Fehlerhafte Eingabe!\n");
+                                printf("Uebertragung in int-Matrix funktioniert nicht!\n");
                                 return 0;
                         }
                 }
@@ -83,6 +131,8 @@ int user_defined(int ***m)
         *m = matrix;
         return 1;
 }
+
+
 
 int main_instruction(void)
 {

@@ -54,7 +54,7 @@ int main (void)
 {
         /*Variablen anlegen*/
         int **matrix, **m;
-        int nutzer_def, x, anzahl_gen, status = 0, i = 0;
+        int nutzer_def, x, i = 0, c;
         srand(time(NULL));
 
         /*Speicher fuer die Matrix reservieren*/
@@ -81,7 +81,16 @@ int main (void)
 
         /*Nutzerdefinierte Matrix*/
         while (nutzer_def == 1) {
-                x = user_defined(&matrix);
+                printf("Fuer Definition der Matrix per Textdatei, Druecken sie t.\n");
+                printf("Fuer Definition der Matrix per manuelle Eingabe, Druecken sie 2x Enter.\n");
+                c = getchar();
+                if (c == 't') {
+                        flush();
+                        x = text_defined(&matrix);
+                } else {
+                        flush();
+                        x = user_defined(&matrix);
+                }
                 /*falls Definition durch Nutzer fehlschlaegt*/
                 nutzer_def = 3;
                 if (x == 0) {
@@ -100,34 +109,33 @@ int main (void)
         }
 
 
-        /*Nutzerabfrage: Anzahl an Generationen*/
-        while (status == 0) {
-        printf("Wie viele Generationen moechten Sie generieren? Geben Sie eine natuerliche Zahl ein.\n");
-        status = scanf("%i", &anzahl_gen);
-        /*falls einlesen der Generationenanzahl fehlschlaegt*/
-        if (status == 0 || getchar() != '\n') {
-                flush();
-                status = 0;
-                printf("Fehlerhafte Eingabe!\n");
-                }
-        }
-
         /*Anfangsgeneration ausgeben*/
         printf("\nAnfangsgeneration:\n\n");
         print(matrix);
+        printf("\nDruecken Sie Enter, um die naechste Generation anzuzeigen.\n");
+        printf("Wenn Sie das Programm abbrechen wollen, druecken Sie x.\n");
 
-        /*folge Generationen ausgeben*/
-        while (i < anzahl_gen) {
-                m = gen_berechnen(matrix);
-                if (m == NULL) {
-                        printf("Programm wird beendet.\n");
-                        return 0;
-                } else {
-                        matrix = m;
-                        printf("\n%i.te Folgegeneration:\n\n", i + 1);
-                        print(matrix);
+        i = 0;
+        /*Folgegenerationen ausdrucken*/
+        while (1) {
+                c = getchar();
+                if (c == '\n'){
+                        m = gen_berechnen(matrix);
+                        if (m == NULL) {
+                                printf("Programm wird beendet.\n");
+                                return 0;
+                        } else {
+                                matrix = m;
+                                printf("\n%i.te Folgegeneration:\n\n", i + 1);
+                                print(matrix);
+                        }
+                        printf("\nDruecken Sie Enter, um die naechste Generation anzuzeigen.\n");
+                        printf("Wenn Sie das Programm abbrechen wollen, druecken Sie x.\n");
+                } else if (c == 'x'){
+                        break;
                 }
-                i++;
+                ++i;
+
         }
 
 

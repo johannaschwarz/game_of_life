@@ -83,6 +83,23 @@ int rand_zaehlen(int **m, int r, int c) {
 
 }
 */
+char * read_string() {
+        char c = getchar();
+        int i = 0;
+        char *string = malloc((i + 1) * sizeof(char));
+        while (c != '\n') {
+                string[i] = c;
+                c = getchar();
+                ++i;
+                string = realloc(string, (i + 1) * sizeof(char));
+                if (string == NULL) {
+                        return NULL;
+                }
+        }
+        string[i] = '\0';
+        return string;
+}
+
 int zaehlen(int **m, int r, int c)
 {
         int counter = 0, i, j;

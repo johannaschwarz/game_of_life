@@ -10,6 +10,7 @@
 #define COL 10
 #define ROW 10
 
+int text_defined(int ***m);
 int user_defined(int ***matrix);
 int main_instruction(void);
 

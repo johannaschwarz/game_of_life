@@ -3,11 +3,12 @@
 int text_defined(int ***m)
 {
         FILE * text;
-        char input[ROW * COL + ROW];
+        char input[ROW * COL + ROW] = "\0";
         char *name;
         char **transition = char_init();
         int **matrix = int_init();
         int i, j , n;
+        char c;
 
         /*Einlesen des Namens der Datei*/
         printf("Geben Sie den Namen der Textdatei ein.\n");
@@ -17,6 +18,8 @@ int text_defined(int ***m)
         if (name == NULL) {
                 printf("Name konnte nicht gelesen werden.\n");
                 free(name);
+                destroy_char(transition);
+                destroy(matrix);
                 return 0;
         }
         printf("Eingelesener Name: %s\n", name);
@@ -28,37 +31,71 @@ int text_defined(int ***m)
         if (text == NULL) {
                 printf("Datei konnte nicht geöffnet werden.\n");
                 free(name);
+                destroy_char(transition);
+                destroy(matrix);
                 return 0;
         }
 
-        /*Strom in String überführen*/
+        /*Strom in Zwischenmatrix speichern*/
+        for (j = 0; j < ROW; ++j) {
+
+                i = fscanf(text,"%s", transition[j]);
+
+                /*Bei Fehler*/
+                if (i == EOF) {
+                        printf("Pufferfehler beim Auslesen der Datei\n");
+                        flush_buff();
+                        free(name);
+                        destroy_char(transition);
+                        destroy(matrix);
+                        return 0;
+                }
+
+                printf("%s\n", transition[j]);
+        }
+
         i = fscanf(text, "%s", input);
-
-        /*Bei Fehler*/
-        if (i == EOF) {
-                printf("Pufferfehler beim Auslesen der Datei\n");
-                flush_buff();
+        printf("%s\n", input);
+        if (i != EOF || *input != '\0') {
+                printf("zu lange Eingabe!\n");
                 free(name);
+                destroy_char(transition);
+                flush_buff();
+                destroy(matrix);
                 return 0;
         }
 
-        printf("%s\n", input);
+
+        /*Falls Datei fehlerhaft ist*/
+        for (i = 0; i < ROW; ++i) {
+                for (j = 0; j < COL; ++j) {
+                        if (transition[i][j] != ALIVE || transition[i][j] != DEAD) {
+                                printf("Fehlerhafte Datei!\n");
+                                free(name);
+                                flush_buff();
+                                destroy_char(transition);
+                                destroy(matrix);
+                                return 0;
+                        }
+                }
+        }
+
 
         fclose(text);
 
         /*in Zwischenmatrix speichern*/
-        i = 0;
-        transition[i] = strtok(input, ",");
+        /*i = 0;
+        transition[i] = strtok(input, "\n");
         printf("%s\n", transition[i]);
         for (i = 1; i < ROW; i++) {
-                transition[i] = strtok(NULL, ",");
-                printf("%s\n", transition[i]);
+                transition[i] = strtok(NULL, "\n");
+                printf("%i.: %s\n",i, transition[i]);
         }
-        if (strtok(NULL, ",") != NULL) {
+        if (strtok(NULL, "\n") != NULL) {
                 printf("Formatfehler\n");
                 free(name);
                 return 0;
-        }
+        }*/
 
 
         /*Zwischenmatrix an Endmatrix übergeben*/
@@ -71,6 +108,8 @@ int text_defined(int ***m)
                         } else {
                                 printf("Uebertragung in int-Matrix funktioniert nicht!\n");
                                 free(name);
+                                destroy_char(transition);
+                                destroy(matrix);
                                 return 0;
                         }
                 }
@@ -79,6 +118,8 @@ int text_defined(int ***m)
 
         *m = matrix;
         free(name);
+        destroy_char(transition);
+        destroy(matrix);
         return 1;
 }
 

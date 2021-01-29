@@ -201,6 +201,15 @@ void print(int **m)
         }
 }
 
+void destroy_char(char **m)
+{
+        int i;
+        for (i = 0; i < ROW; i++) {
+                free(m[i]);
+        }
+        free(m);
+}
+
 void destroy(int **m)
 {
         int i;

@@ -13,6 +13,7 @@ int ** int_init(void);
 char ** char_init(void);
 void random_generation(int **m);
 void print(int **m);
+void destroy_char(char **m);
 void destroy(int **m);
 void flush(void);
 int flush_buff(void);

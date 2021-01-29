@@ -132,13 +132,14 @@ int main (void)
                         printf("\nDruecken Sie Enter, um die naechste Generation anzuzeigen.\n");
                         printf("Wenn Sie das Programm abbrechen wollen, druecken Sie x.\n");
                 } else if (c == 'x'){
+                        flush();
                         break;
                 }
                 ++i;
 
         }
 
-
+        flush_buff();
         destroy(matrix);
         return 0;
 }

@@ -69,7 +69,9 @@ int text_defined(int ***m)
         /*Falls Datei fehlerhaft ist*/
         for (i = 0; i < ROW; ++i) {
                 for (j = 0; j < COL; ++j) {
-                        if (transition[i][j] != ALIVE || transition[i][j] != DEAD) {
+                        if (transition[i][j] == ALIVE || transition[i][j] == DEAD) {
+                                continue;
+                        } else {
                                 printf("Fehlerhafte Datei!\n");
                                 free(name);
                                 flush_buff();

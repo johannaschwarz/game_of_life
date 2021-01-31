@@ -7,8 +7,8 @@
 #include <string.h>
 #include "funktionen.h"
 
-#define COL 10
-#define ROW 10
+#define COL 20  
+#define ROW 20
 
 int text_defined(int ***m);
 int user_defined(int ***matrix);

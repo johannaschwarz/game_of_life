@@ -176,19 +176,6 @@ char ** char_init(void)
         }
         return m;
 }
-void random_generation(int **m)
-{
-        int i, j;
-        for (i = 0; i < ROW; ++i) {
-                for (j = 0; j < COL; ++j) {
-                        if ((rand() % 6) == 0) {
-                                m[i][j] = ALIVE;
-                        } else {
-                                m[i][j] = DEAD;
-                        }
-                }
-        }
-}
 
 void print(int **m)
 {

@@ -8,7 +8,6 @@ int text_defined(int ***m)
         char **transition = char_init();
         int **matrix = int_init();
         int i, j , n;
-        char c;
 
         /*Einlesen des Namens der Datei*/
         printf("Geben Sie den Namen der Textdatei ein.\n");
@@ -84,21 +83,6 @@ int text_defined(int ***m)
 
 
         fclose(text);
-
-        /*in Zwischenmatrix speichern*/
-        /*i = 0;
-        transition[i] = strtok(input, "\n");
-        printf("%s\n", transition[i]);
-        for (i = 1; i < ROW; i++) {
-                transition[i] = strtok(NULL, "\n");
-                printf("%i.: %s\n",i, transition[i]);
-        }
-        if (strtok(NULL, "\n") != NULL) {
-                printf("Formatfehler\n");
-                free(name);
-                return 0;
-        }*/
-
 
         /*Zwischenmatrix an Endmatrix übergeben*/
         for (j = 0; j < ROW; ++j) {

@@ -11,7 +11,6 @@ char * read_string();
 int zaehlen(int **m, int r, int c);
 int ** int_init(void);
 char ** char_init(void);
-void random_generation(int **m);
 void print(int **m);
 void destroy_char(char **m);
 void destroy(int **m);

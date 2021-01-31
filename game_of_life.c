@@ -49,6 +49,7 @@ Algorithmus:
 */
 #include "benutzereingaben.h"
 #include "funktionen.h"
+#include "generationen.h"
 
 int main (void)
 {
@@ -71,12 +72,22 @@ int main (void)
 
         if (nutzer_def == -1) {
                 printf("Programm wird abgebrochen.\n");
+                flush_buff();
+                destroy(matrix);
                 return 0;
         }
 
         /*Randomisierte Matrix*/
         if (nutzer_def == 0) {
-                random_generation(matrix);
+                printf("Fuer eine zufaellig generierte Anfangsgeneration, geben Sie 1 ein."
+                "\nFuer eine interessante, vordefinierte Anfangsgeneration, geben Sie 2 ein.\n");
+                c = getchar();
+                if (c == '1') {
+                        random_generation(matrix);
+                } else if (c == '2') {
+                        generation_toad(matrix);
+                }
+                nutzer_def = 3;
         }
 
         /*Nutzerdefinierte Matrix*/
@@ -94,26 +105,30 @@ int main (void)
                 /*falls Definition durch Nutzer fehlschlaegt*/
                 nutzer_def = 3;
                 if (x == 0) {
+                        flush();
                         nutzer_def = main_instruction();
 
                 }
         }
         if (nutzer_def == -1) {
                 printf("Programm wird abgebrochen.\n");
+                flush_buff();
+                destroy(matrix);
                 return 0;
         }
 
         /*Randomisierte Matrix*/
         if (nutzer_def == 0) {
+                flush();
                 random_generation(matrix);
         }
-
 
         /*Anfangsgeneration ausgeben*/
         printf("\nAnfangsgeneration:\n\n");
         print(matrix);
         printf("\nDruecken Sie Enter, um die naechste Generation anzuzeigen.\n");
         printf("Wenn Sie das Programm abbrechen wollen, druecken Sie x.\n");
+        flush();
 
         i = 0;
         /*Folgegenerationen ausdrucken*/
@@ -123,6 +138,8 @@ int main (void)
                         m = gen_berechnen(matrix);
                         if (m == NULL) {
                                 printf("Programm wird beendet.\n");
+                                flush_buff();
+                                destroy(matrix);
                                 return 0;
                         } else {
                                 matrix = m;

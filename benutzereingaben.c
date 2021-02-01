@@ -42,7 +42,7 @@ int text_defined(int ***m)
 
                 /*Bei Fehler*/
                 if (i == EOF) {
-                        printf("Pufferfehler beim Auslesen der Datei\n");
+                        printf("Fehler beim Auslesen der Datei\n");
                         flush_buff();
                         free(name);
                         destroy_char(transition);
@@ -50,11 +50,11 @@ int text_defined(int ***m)
                         return 0;
                 }
 
-                printf("%s\n", transition[j]);
+                /*printf("%s\n", transition[j]);*/
         }
 
         i = fscanf(text, "%s", input);
-        printf("%s\n", input);
+        /*printf("input: %s\n", input);*/
         if (i != EOF || *input != '\0') {
                 printf("zu lange Eingabe!\n");
                 free(name);
@@ -83,7 +83,6 @@ int text_defined(int ***m)
 
 
         fclose(text);
-
         /*Zwischenmatrix an Endmatrix übergeben*/
         for (j = 0; j < ROW; ++j) {
                 for (n = 0; n < COL; ++n) {
@@ -105,7 +104,6 @@ int text_defined(int ***m)
         *m = matrix;
         free(name);
         destroy_char(transition);
-        destroy(matrix);
         return 1;
 }
 

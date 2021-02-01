@@ -1,42 +1,12 @@
 #include "funktionen.h"
-/*
-Algorithmus:
-        1. Matrize mit ALIVE als lebendige Zelle; DEAD als tote Zelle
-        2. Zelle [j][i]
-                counter = 0;
-                für jeden lebendigen Nachbarn ++counter
 
-                [j-1]:  [i-1][i][i+1]
-                [j]:    [i-1][i+1]
-                [j+1]:  [i-1][i][i+1]
-        3. Fallunterscheidung für jede Zelle:
-                - lebendige Zelle(*):
-                < 2 * = tot!
-                2 - 3 * = lebendig
-                > 3 = tot!
-
-                - tote Zelle(-):
-                != 3 * = tot
-                = 3 * = lebendig
-
-                char raster[10][10] = {"*-------**","***----**-"};
-                printf("%i\n", '-');
-                for (i = 0; i < 2; ++i) {
-                        for (j = 0; j < 10; ++j) {
-                                printf("%c", raster[i][j]);
-                        }
-                        printf("\n");
-                }
-
-*/
-
-int ** gen_berechnen(int **matrix)
+int gen_berechnen(int **matrix)
 {
         int i, j, counter, survivors = 0;
-        int **m, **n;
+        int **m;
+
         /*Werte an Zwischenzeiger übergeben*/
         m = int_init();
-        n = int_init();
 
         for (i = 0; i < ROW; i++) {
                 for (j = 0; j < COL; j++) {
@@ -44,26 +14,16 @@ int ** gen_berechnen(int **matrix)
                         if (m[i][j] == ALIVE) {
                                 ++survivors;
                         }
-                        /*printf("%c", m[i][j]);*/
                 }
-                /*printf("\n");*/
-        }
-
-        for (i = 0; i < ROW; i++) {
-                for (j = 0; j < COL; j++) {
-                        n[i][j] = matrix[i][j];
-                        if (n[i][j] == ALIVE) {
-                                ++survivors;
-                        }
-                        /*printf("%c", m[i][j]);*/
-                }
-                /*printf("\n");*/
         }
 
         if (survivors == 0) {
+                destroy(m);
+                destroy(matrix);
                 printf("Alle Zellen sind tot.\n");
-                return NULL;
+                return 0;
         }
+
 
         /*Folgegeneration berechnen */
         for (i = 0; i < ROW; ++i) {
@@ -73,28 +33,27 @@ int ** gen_berechnen(int **matrix)
                         if (m[i][j] == DEAD) {
                                 if (counter == 3) {
                                         /*Zelle wird geboren*/
-                                        n[i][j] = ALIVE;
+                                        matrix[i][j] = ALIVE;
+                                        ++survivors;
                                 }
                         /*bei lebendiger Zelle*/
                         } else if (m[i][j] == ALIVE){
                                 if (counter < 2 || counter > 3) {
                                         /*Zelle stirbt*/
-                                        n[i][j] = DEAD;
+                                        matrix[i][j] = DEAD;
+                                        --survivors;
                                 }
                         } else {
+                                destroy(m);
+                                destroy(matrix);
                                 printf("Fehler beim Generieren der Folgegeneration\n");
-                                return NULL;
+                                return 0;
                         }
                 }
         }
-        return n;
+        return survivors;
 }
-/*
-int rand_zaehlen(int **m, int r, int c) {
-        bei row = 0:
 
-}
-*/
 char * read_string() {
         char c = getchar();
         int i = 0;
@@ -127,7 +86,6 @@ int zaehlen(int **m, int r, int c)
                         if (i == r && j == c) {
                                 continue;
                         }
-                        /*printf("Mod i:%i\n Mod j: %i\n", (ROW + i) % ROW, (COL + j) % COL);*/
                         /*Zaehlen der lebendigen Zellen um die gesuchte Zelle herum*/
                         if (m[(ROW +i) % ROW][(COL + j) % COL] == ALIVE) {
                                 ++counter;

@@ -21,7 +21,7 @@ int gen_berechnen(int **matrix)
                 destroy(m);
                 destroy(matrix);
                 printf("Alle Zellen sind tot.\n");
-                return 0;
+                return -1;
         }
 
 
@@ -47,7 +47,7 @@ int gen_berechnen(int **matrix)
                                 destroy(m);
                                 destroy(matrix);
                                 printf("Fehler beim Generieren der Folgegeneration\n");
-                                return 0;
+                                return -1;
                         }
                 }
         }

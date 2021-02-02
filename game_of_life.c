@@ -99,7 +99,8 @@ int main (void)
                 if (c == '\n'){
                         /*m = */
                         survivors = gen_berechnen(matrix);
-                        if (survivors == 0) {
+                        /*bei Fehler*/
+                        if (survivors == -1) {
                                 printf("Programm wird beendet.\n");
                                 flush_buff();
                                 return 1;

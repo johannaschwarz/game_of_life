@@ -32,7 +32,7 @@ int main (void)
         if (nutzer_def == 0) {
                 printf("Fuer eine zufaellig generierte Anfangsgeneration, geben Sie 1 ein."
                 "\nFuer eine interessante, vordefinierte Anfangsgeneration, geben Sie 2 (toad) oder "
-                "3 (pulsar) oder 4 (spaceship) oder 5 (glidergun) ein.\n");
+                "3 (pulsar) oder 4 (spaceship) oder 5 (glidergun) oder 6 (explosion) ein.\n");
                 c = getchar();
                 if (c == '1') {
                         random_generation(matrix);
@@ -44,6 +44,8 @@ int main (void)
                         generation_spaceship(matrix);
                 } else if (c == '5') {
                         generation_glidergun(matrix);
+                } else if (c == '6') {
+                        generation_explosion(matrix);
                 }
 
                 nutzer_def = 3;

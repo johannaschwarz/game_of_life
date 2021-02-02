@@ -14,6 +14,31 @@ void random_generation(int **m)
         }
 }
 
+void generation_explosion(int **m)
+{
+        int i, j;
+        for (i = 0; i < ROW; ++i) {
+                for (j = 0; j < COL; ++j) {
+                        m[i][j] = DEAD;
+                }
+        }
+
+        for (i = 20; i < 27; i += 6) {
+                for (j = 20; j < 23; ++j){
+                        m[i][j] = ALIVE;
+                }
+        }
+
+        for (i = 21; i < 26; ++i) {
+                if (i == 23) {
+                        continue;
+                }
+                for (j = 20; j < 24; j += 2){
+                        m[i][j] = ALIVE;
+                }
+        }
+}
+
 void generation_glidergun(int **m)
 {
         int i, j;

@@ -29,26 +29,49 @@ int main (void)
         }
 
         /*Randomisierte Matrix*/
-        if (nutzer_def == 0) {
-                printf("Fuer eine zufaellig generierte Anfangsgeneration, geben Sie 1 ein."
-                "\nFuer eine interessante, vordefinierte Anfangsgeneration, geben Sie 2 (toad) oder "
-                "3 (pulsar) oder 4 (spaceship) oder 5 (glidergun) oder 6 (explosion) ein.\n");
+        while (nutzer_def == 0) {
+
+                printf("\nFuer eine zufaellig generierte Anfangsgeneration, geben Sie 1 ein."
+                "\nFuer eine interessante, vordefinierte Anfangsgeneration, geben Sie\n 2 (toad)\noder "
+                "3 (pulsar)\noder 4 (spaceship)\noder 5 (glidergun)\noder 6 (explosion)\noder 7 (f-Pentomino) ein.\n");
+                printf("Geben Sie x ein, um abzubrechen.\n");
                 c = getchar();
-                if (c == '1') {
-                        random_generation(matrix);
-                } else if (c == '2') {
-                        generation_toad(matrix);
-                } else if (c == '3') {
-                        generation_pulsar(matrix);
-                } else if (c == '4') {
-                        generation_spaceship(matrix);
-                } else if (c == '5') {
-                        generation_glidergun(matrix);
-                } else if (c == '6') {
-                        generation_explosion(matrix);
+                if ((getchar() != '\n')|| c > '8' || c < '1') {
+                        if (c == 'x') {
+                                printf("Programm wird abgebrochen.\n");
+                                flush_buff();
+                                destroy(matrix);
+                                return 0;
+                        }
+                        flush();
+                        printf("\nEs sind ganze Zahlen zwischen 1 und 7 als Eingabe erlaubt.\n");
+                        continue;
                 }
 
-                nutzer_def = 3;
+                if (c == '1') {
+                        random_generation(matrix);
+                        nutzer_def = 3;
+                } else if (c == '2') {
+                        generation_toad(matrix);
+                        nutzer_def = 3;
+                } else if (c == '3') {
+                        generation_pulsar(matrix);
+                        nutzer_def = 3;
+                } else if (c == '4') {
+                        generation_spaceship(matrix);
+                        nutzer_def = 3;
+                } else if (c == '5') {
+                        generation_glidergun(matrix);
+                        nutzer_def = 3;
+                } else if (c == '6') {
+                        generation_explosion(matrix);
+                        nutzer_def = 3;
+                } else if (c == '7') {
+                        generation_fPentomino(matrix);
+                        nutzer_def = 3;
+                }
+
+
         }
 
         /*Nutzerdefinierte Matrix*/

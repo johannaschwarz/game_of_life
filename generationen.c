@@ -14,6 +14,25 @@ void random_generation(int **m)
         }
 }
 
+void generation_fPentomino(int **m)
+{
+        int i, j;
+        for (i = 0; i < ROW; ++i) {
+                for (j = 0; j < COL; ++j) {
+                        m[i][j] = DEAD;
+                }
+        }
+
+        for (i = 20; i < 23; ++i) {
+                for (j = 20; j < 23; ++j) {
+                        if((j == 20 && i != 21) || (j == 22 && i != 20)) {
+                                continue;
+                        }
+                        m[i][j] = ALIVE;
+                }
+        }
+}
+
 void generation_explosion(int **m)
 {
         int i, j;

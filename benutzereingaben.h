@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <ctype.h>
 #include "funktionen.h"
+
 
 #define COL 50
 #define ROW 50

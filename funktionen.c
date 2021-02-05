@@ -164,11 +164,18 @@ void destroy(int **m)
         free(m);
 }
 
-void flush(void)
+int flush(void)
 {
-        while (getchar() != '\n'){
-
+        char c = getchar();
+        if (c == '\n'){
+                return 0;
         }
+
+        while (getchar() != '\n'){
+                c = getchar();
+        }
+
+        return 1;
 }
 
 int flush_buff(void)

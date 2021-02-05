@@ -12,6 +12,7 @@
 #define COL 50
 #define ROW 50
 
+int programm_defined(int **m);
 int text_defined(int ***m);
 int user_defined(int ***matrix);
 int main_instruction(void);

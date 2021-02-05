@@ -2,6 +2,14 @@
 #include "funktionen.h"
 #include "generationen.h"
 
+/*matrix m löschen*/
+
+/*Zeile 144: else fall für falsche eingaben?*/
+
+/*eventuell in benutzereingaben user_defined löschen*/
+
+/*eventuell matrix cahr init löschen*/
+
 int main (void)
 {
         /*Variablen anlegen*/
@@ -28,7 +36,7 @@ int main (void)
                 return 0;
         }
 
-        /*Randomisierte Matrix*/
+        /*Programmerstellte Matrix*/
         while (nutzer_def == 0) {
 
                 printf("\nFuer eine zufaellig generierte Anfangsgeneration, geben Sie 1 ein."
@@ -71,7 +79,6 @@ int main (void)
                         nutzer_def = 3;
                 }
 
-
         }
 
         /*Nutzerdefinierte Matrix*/
@@ -92,9 +99,10 @@ int main (void)
                 if (x == 0) {
                         flush();
                         nutzer_def = main_instruction();
-
                 }
         }
+
+        /*Abbruch des Programms*/
         if (nutzer_def == -1) {
                 printf("Programm wird abgebrochen.\n");
                 flush_buff();
@@ -138,7 +146,7 @@ int main (void)
                 } else if (c == 'x'){
                         flush();
                         break;
-                }
+                } /*else fall für falsche eingaben?*/
                 ++i;
 
         }

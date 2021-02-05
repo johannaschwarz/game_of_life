@@ -2,7 +2,7 @@
 
 int text_defined(int ***m)
 {
-        FILE * text;
+        FILE *text;
         char input[ROW * COL + ROW] = "\0";
         char *name;
         char **transition = char_init();
@@ -19,6 +19,7 @@ int text_defined(int ***m)
                 free(name);
                 destroy_char(transition);
                 destroy(matrix);
+                flush();
                 return 0;
         }
         printf("Eingelesener Name: %s\n", name);
@@ -32,10 +33,11 @@ int text_defined(int ***m)
                 free(name);
                 destroy_char(transition);
                 destroy(matrix);
+                flush_buff();
                 return 0;
         }
 
-        /*Strom in Zwischenmatrix speichern*/
+        /*Speichern der Datei in Zwischenmatrix*/
         for (j = 0; j < ROW; ++j) {
 
                 i = fscanf(text,"%s", transition[j]);
@@ -53,8 +55,12 @@ int text_defined(int ***m)
                 /*printf("%s\n", transition[j]);*/
         }
 
+        /*Überprüfen, ob text leer ist*/
         i = fscanf(text, "%s", input);
+
         /*printf("input: %s\n", input);*/
+
+        /*Falls Datei länger als Matrixgröße:*/
         if (i != EOF || *input != '\0') {
                 printf("zu lange Eingabe!\n");
                 free(name);
@@ -63,7 +69,6 @@ int text_defined(int ***m)
                 destroy(matrix);
                 return 0;
         }
-
 
         /*Falls Datei fehlerhaft ist*/
         for (i = 0; i < ROW; ++i) {
@@ -81,8 +86,8 @@ int text_defined(int ***m)
                 }
         }
 
-
         fclose(text);
+
         /*Zwischenmatrix an Endmatrix übergeben*/
         for (j = 0; j < ROW; ++j) {
                 for (n = 0; n < COL; ++n) {

@@ -54,7 +54,7 @@ int gen_berechnen(int **matrix)
         return survivors;
 }
 
-char * read_string() {
+char *read_string() {
         char c = getchar();
         int i = 0;
         char *string = malloc((i + 1) * sizeof(char));
@@ -87,7 +87,7 @@ int zaehlen(int **m, int r, int c)
                                 continue;
                         }
                         /*Zaehlen der lebendigen Zellen um die gesuchte Zelle herum*/
-                        if (m[(ROW +i) % ROW][(COL + j) % COL] == ALIVE) {
+                        if (m[(ROW + i) % ROW][(COL + j) % COL] == ALIVE) {
                                 ++counter;
                         }
                 }
@@ -95,7 +95,7 @@ int zaehlen(int **m, int r, int c)
         return counter;
 }
 
-int ** int_init(void)
+int **int_init(void)
 {
         int i, j;
         int **m = calloc(ROW, sizeof(int*));
@@ -115,7 +115,7 @@ int ** int_init(void)
         return m;
 }
 
-char ** char_init(void)
+char **char_init(void)
 {
         int i, j;
         char **m = malloc(ROW * sizeof(char*));

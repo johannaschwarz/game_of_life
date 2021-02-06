@@ -11,6 +11,8 @@ int main (void)
         /*Variablen anlegen*/
         int **matrix;
         int nutzer_def, x, i = 0, c, survivors = 0;
+        int u = -1, status;
+        char input[10];
         srand(time(NULL));
 
         /*Speicher fuer die Matrix reservieren*/
@@ -46,19 +48,54 @@ int main (void)
 
         /*Nutzerdefinierte Matrix*/
         while (nutzer_def == 1) {
-                printf("Definition der Matrix per Textdatei:\n");
-                x = text_defined(&matrix);
-                /*printf("Fuer Definition der Matrix per manueller Eingabe, geben Sie 2x Enter ein.\n");*/
-                /*c = getchar();
+                /*printf("Definition der Matrix per Textdatei:\n");
+                x = text_defined(&matrix);*/
+                printf("Fuer Definition der Matrix per Textdatei, geben Sie t ein, fuer Definition durch manuelle Eingabe, geben Sie m ein.\n");
+                c = getchar();
                 if (c == 't') {
                         flush();
                         x = text_defined(&matrix);
-                } else {
+                } else if (c == 'm'){
                         flush();
-                        x = user_defined(&matrix);
-                }*/
-                /*falls Definition durch Nutzer fehlschlaegt*/
+                        printf("\nGeben Sie die Zellen, die Sie beleben moechten in der Form \nZeile,Spalte \nein.\nBeispiel: \t17,12\n"
+                        "Achten Sie darauf, dass Sie sich ihre Zahlen fuer die Zeilen zwischen 1 und %i und ihre Zahlen fuer die Spalten zwischen 1 und %i befinden, da es andernfalls nicht so aussieht, wie sie es wollten.\n", ROW, COL);
+                        printf("Sollte die Zahl einstellig sein, dann stellen Sie bitte eine 0 voran (z.B.: 01).\n");
+                        printf("Geben Sie immer nur eine Zelle auf einmal ein!\n");
+                        printf("Um dem Programm zu zeigen, dass sie fertig sind, geben sie f ein.\n");
+                        printf("Wenn Sie das Programm komplett beenden moechten, geben Sie x ein.\n");
+                        printf("\n\n");
+                        while (u == -1 || u == 1) {
+                                printf("Neue Eingabe: ");
+                                status = scanf("%s", input);
+                                if (status == EOF) {
+                                        printf("Fehler beim Einlesen\n");
+                                        nutzer_def = main_instruction();
+                                        continue;
+                                }
+                                u = user_defined(&matrix, input);
+
+                                if (u == 0) {
+                                        flush();
+                                        break;
+                                } else if (u == 2) {
+                                        printf("Eingabe abgeschlossen\n");
+                                        flush();
+                                        break;
+                                } else if (u == 3) {
+                                        printf("Programm wird abgebrochen.");
+                                        destroy(matrix);
+                                        return 0;
+                                }
+                                flush();
+                        }
+                }
                 nutzer_def = 3;
+                if (c != 't' && c != 'm') {
+                        flush();
+                        nutzer_def = main_instruction();
+                }
+                /*falls Definition durch Nutzer fehlschlaegt*/
+
                 if (x == 0) {
                         flush();
                         nutzer_def = main_instruction();

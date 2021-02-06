@@ -14,14 +14,59 @@ void random_generation(int **m)
         }
 }
 
-void generation_fPentomino(int **m)
+void generation_multiple_spaceships(int **m)
 {
         int i, j;
-        for (i = 0; i < ROW; ++i) {
+        /*for (i = 0; i < ROW; ++i) {
                 for (j = 0; j < COL; ++j) {
                         m[i][j] = DEAD;
                 }
+        }*/
+
+        /*kleines Spaceship*/
+        for (j = 11; j < 15; j++) {
+                m[13][j] = ALIVE;
         }
+        m[14][10] = ALIVE;
+        m[14][14] = ALIVE;
+        m[15][14] = ALIVE;
+        m[16][10] = ALIVE;
+        m[16][13] = ALIVE;
+
+        /*mittleres Spaceship*/
+        for (j = 18; j < 23; j++) {
+                m[13][j] = ALIVE;
+        }
+
+        m[14][17] = ALIVE;
+        m[14][22] = ALIVE;
+        m[15][22] = ALIVE;
+        m[16][17] = ALIVE;
+        m[16][21] = ALIVE;
+        m[17][19] = ALIVE;
+
+        /*grosses Spaceship*/
+        for (j = 26; j < 32; j++) {
+                m[13][j] = ALIVE;
+        }
+
+        m[14][25] = ALIVE;
+        m[14][31] = ALIVE;
+        m[15][31] = ALIVE;
+        m[16][25] = ALIVE;
+        m[16][30] = ALIVE;
+        m[17][27] = ALIVE;
+        m[17][28] = ALIVE;
+}
+
+void generation_fPentomino(int **m)
+{
+        int i, j;
+        /*for (i = 0; i < ROW; ++i) {
+                for (j = 0; j < COL; ++j) {
+                        m[i][j] = DEAD;
+                }
+        }*/
 
         for (i = 20; i < 23; ++i) {
                 for (j = 20; j < 23; ++j) {
@@ -36,11 +81,11 @@ void generation_fPentomino(int **m)
 void generation_explosion(int **m)
 {
         int i, j;
-        for (i = 0; i < ROW; ++i) {
+        /*for (i = 0; i < ROW; ++i) {
                 for (j = 0; j < COL; ++j) {
                         m[i][j] = DEAD;
                 }
-        }
+        }*/
 
         for (i = 20; i < 27; i += 6) {
                 for (j = 20; j < 23; ++j){
@@ -61,11 +106,11 @@ void generation_explosion(int **m)
 void generation_glidergun(int **m)
 {
         int i, j;
-        for (i = 0; i < ROW; ++i) {
+        /*for (i = 0; i < ROW; ++i) {
                 for (j = 0; j < COL; ++j) {
                         m[i][j] = DEAD;
                 }
-        }
+        }*/
 
         /*linker 4er Block*/
         for (i = 5; i < 7; ++i) {
@@ -121,11 +166,11 @@ void generation_glidergun(int **m)
 void generation_spaceship(int **m)
 {
         int i, j;
-        for (i = 0; i < ROW; ++i) {
+        /*for (i = 0; i < ROW; ++i) {
                 for (j = 0; j < COL; ++j) {
                         m[i][j] = DEAD;
                 }
-        }
+        }*/
 
         m[10][10] = ALIVE;
         m[10][13] = ALIVE;
@@ -142,11 +187,11 @@ void generation_spaceship(int **m)
 void generation_pulsar (int **m)
 {
         int i, j;
-        for (i = 0; i < ROW; ++i) {
+        /*for (i = 0; i < ROW; ++i) {
                 for (j = 0; j < COL; ++j) {
                         m[i][j] = DEAD;
                 }
-        }
+        }*/
 
         for (i = 10; i < 23; ++i) {
                 if (i != 10 && i != 15 && i != 17 && i != 22) {
@@ -174,11 +219,11 @@ void generation_pulsar (int **m)
 void generation_toad(int **m)
 {
         int i, j, n = 7;
-        for (i = 0; i < ROW; ++i) {
+        /*for (i = 0; i < ROW; ++i) {
                 for (j = 0; j < COL; ++j) {
                         m[i][j] = DEAD;
                 }
-        }
+        }*/
 
         for (i = 7; i < 9; ++i) {
                 for (j = n; j < (n + 3); ++j) {

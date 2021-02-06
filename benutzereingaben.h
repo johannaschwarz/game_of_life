@@ -7,6 +7,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "funktionen.h"
+#include "generationen.h"
 
 
 #define COL 50
@@ -14,7 +15,7 @@
 
 int programm_defined(int **m);
 int text_defined(int ***m);
-int user_defined(int ***matrix);
+int user_defined(int ***matrix, char *input);
 int main_instruction(void);
 
 

@@ -1,5 +1,4 @@
 #include "benutzereingaben.h"
-#include "generationen.h"
 
 int programm_defined(int **m)
 {
@@ -41,6 +40,9 @@ int programm_defined(int **m)
                 return 1;
         } else if (c == '7') {
                 generation_fPentomino(m);
+                return 1;
+        } else if (c == '8') {
+                generation_multiple_spaceships(m);
                 return 1;
         }
         return 2;
@@ -195,82 +197,82 @@ int main_instruction(void)
         return main_instruction();
 
 }
-int user_defined(int ***m)
+int user_defined(int ***m, char *input)
 {
-        int i, j, n;
-        char input[ROW * COL + ROW];
-        char c;
-        char **transition = char_init();
-        int **matrix = int_init();
+        int i, j;
+        int zeile, spalte;
+        char **transition;
+        int **matrix;
+        int t01, t00, t10, t11;
+        matrix = *m;
 
-        /*Speicherfehrler abfangen*/
-        if (transition == NULL || matrix == NULL) {
+        /*Ueberpruefung auf Speicherfehler*/
+        if (matrix == NULL) {
                 printf("Speicherfehler\n");
                 return 0;
         }
 
-        /*Anleitung fuer Nutzer*/
-        printf("\nGebe %d Zeichenketten mit jeweils %d Zeichen an.\n", ROW, COL);
-        printf("Die Zeichenketten sollen durch ',' getrennt sein.\n");
-        printf("Andere Zeichen sind nicht erlaubt.\n");
-        printf("Beispiel:\n");
-        for (j = 0; j < 2; j++) {
-                for (i = 0; i < COL; ++i) {
-                        if ((rand() % 3) == 0) {
-                                printf("%c", ALIVE);
-                        } else {
-                                printf("%c", DEAD);
-                        }
-                }
-                if (j == 0) {
-                        printf(",");
-                }
-        }
-        printf("\n\n");
-
-        /*Nutzerdefinierte Matrix einlesen*/
-        i = 0;
-        c = getchar();
-        while (c != '\n') {
-                input[i] = c;
-                c = getchar();
-                ++i;
-        }
-        input[i] = '\0';
-
-        if (i != (ROW * COL + ROW - 1)) {
-                printf("Zeichenkette: Fehlerhafte Eingabe!\n");
+        /*Initialisieren von transition*/
+        transition = calloc(2, sizeof(char));
+        if (transition == NULL) {
+                printf("Speicherfehler\n");
                 return 0;
         }
-
-        /*in Zwischenmatrix speichern*/
-        i = 0;
-        transition[i] = strtok(input, ",");
-        printf("%s\n", transition[i]);
-        for (i = 1; i < ROW; i++) {
-                transition[i] = strtok(NULL, ",");
-                printf("%s\n", transition[i]);
+        for (i = 0; i < 2; i++) {
+                transition[i] = calloc(2, sizeof(char));
+                if (transition[i] == NULL) {
+                        for (j = 0; j < i; j++) {
+                                free(transition[j]);
+                        }
+                        free(transition);
+                        printf("Speicherfehler\n");
+                        return 0;
+                }
         }
+
+        /*Zellenangabe einlesen*/
+        transition[0] = strtok(input, ",");
+        transition[1] = strtok(NULL, ",");
+
+        if (transition[0][0] == 'f' && transition[0][1] == '\0') {
+                return 2;
+        } else if (transition[0][0] == 'x' && transition[0][1] == '\0') {
+                return 3;
+        }
+
+
+        /*Eingabe auf Richtigkeit ueberpruefen*/
         if (strtok(NULL, ",") != NULL) {
-                printf("Formatfehler\n");
-                return 0;
-        }
-
-
-        /*Zwischenmatrix an Endmatrix übergeben*/
-        for (j = 0; j < ROW; ++j) {
-                for (n = 0; n < COL; ++n) {
-                        if (transition[j][n] == ALIVE) {
-                                matrix[j][n] = ALIVE;
-                        } else if (transition[j][n] == DEAD) {
-                                matrix[j][n] = DEAD;
-                        } else {
-                                printf("Uebertragung in int-Matrix funktioniert nicht!\n");
-                                return 0;
-                        }
+                printf("Fehlerhafte Eingabe!\nBitte wiederholen!\n");
+                /*for (j = 0; j < 2; j++) {
+                        free(transition[j]);
                 }
+                free(transition);*/
+                return -1;
+        } else if (!isdigit(transition[0][0]) || !isdigit(transition[0][1]) || !isdigit(transition[1][0]) || !isdigit(transition[1][1])) {
+                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorstellen!\n", ROW, COL);
+                /*for (j = 0; j < 2; j++) {
+                        free(transition[j]);
+                }
+                free(transition);*/
+                return -1;
         }
-        printf("\n");
+        t00 = transition[0][0] - '0';
+        t01 = transition[0][1] - '0';
+        t10 = transition[1][0] - '0';
+        t11 = transition[1][1] - '0';
+
+        zeile = t00 * 10 + t01;
+        spalte = t10 * 10 + t11;
+
+        /*lebende Zelle an Zwischenmatrix uebergeben*/
+        matrix[(zeile - 1) % ROW][(spalte - 1) % COL] = ALIVE;
+
         *m = matrix;
+        /*for (j = 0; j < 2; j++) {
+                free(transition[j]);
+        }
+        free(transition);*/
+
         return 1;
 }

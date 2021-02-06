@@ -112,6 +112,11 @@ int **int_init(void)
                         return NULL;
                 }
         }
+        for (i = 0; i < ROW; i++) {
+                for (j = 0; j < COL; j++) {
+                        m[i][j] = DEAD;
+                }
+        }
         return m;
 }
 

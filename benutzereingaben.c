@@ -5,12 +5,13 @@ int programm_defined(int **m)
         int c;
         printf("\nFuer eine zufaellig generierte Anfangsgeneration, geben Sie 1 ein."
         "\nFuer eine interessante, vordefinierte Anfangsgeneration, geben Sie\n2 (toad)\noder "
-        "3 (pulsar)\noder 4 (spaceship)\noder 5 (glidergun)\noder 6 (explosion)\noder 7 (f-Pentomino) ein.\n");
+        "3 (pulsar)\noder 4 (spaceship)\noder 5 (glidergun)\noder 6 (explosion)\noder 7 (f-Pentomino)"
+        "\noder 8 (mulitple spaceships)\noder 9 (static) ein.\n");
         printf("Geben Sie x ein, um abzubrechen.\n");
         c = getchar();
-        if ((getchar() != '\n')|| c > '8' || c < '1') {
+        if ((getchar() != '\n')|| c > '9' || c < '1') {
                 if (c == 'x') {
-                        printf("Programm wird abgebrochen.\n");
+                        printf("Programm wird beendet.\n");
                         flush_buff();
                         destroy(m);
                         return 0;
@@ -43,6 +44,9 @@ int programm_defined(int **m)
                 return 1;
         } else if (c == '8') {
                 generation_multiple_spaceships(m);
+                return 1;
+        } else if (c == '9') {
+                generation_static(m);
                 return 1;
         }
         return 2;
@@ -177,8 +181,8 @@ int main_instruction(void)
         c = getchar();
 
         if (flush() == 1) {
-                printf("Falsche Eingabe!\n");
-                main_instruction();
+                printf("Falsche Eingabe 1!\n");
+                return main_instruction();
         }
 
         if (c == 'y') {
@@ -192,14 +196,14 @@ int main_instruction(void)
                 return -1;
         }
 
-        printf("\nFalsche Eingabe!\n");
+        printf("\nFalsche Eingabe 2!\n");
         flush();
         return main_instruction();
 
 }
 int user_defined(int ***m, char *input)
 {
-        int i, j;
+        int i;
         int zeile, spalte;
         char transition[2][6];
         int **matrix;
@@ -209,6 +213,8 @@ int user_defined(int ***m, char *input)
 
         if (strlen(input) != 5 && (*input) != 'f' && (*input) != 'x'){
                 printf("Fehlerhafte Eingabe!\n");
+                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorstellen!\n", ROW, COL);
+                printf("Oder geben Sie f oder x ein, um die Eingabe zu beenden oder das Programm abzubrechen\n");
                 return -1;
         }
         /*Ueberpruefung auf Speicherfehler*/
@@ -217,25 +223,6 @@ int user_defined(int ***m, char *input)
                 return 0;
         }
 
-        /*Initialisieren von transition*/
-        /*transition = calloc(2, sizeof(char*));*/
-
-        /*if (transition == NULL) {
-                printf("Speicherfehler\n");
-                return 0;
-        }
-
-        for (i = 0; i < 2; i++) {
-                transition[i] = calloc(5, sizeof(char));
-                if (transition[i] == NULL) {
-                        for (j = 0; j < i; j++) {
-                                free(transition[j]);
-                        }
-                        free(transition);
-                        printf("Speicherfehler\n");
-                        return 0;
-                }
-        }*/
 
         /*Zellenangabe einlesen*/
         token = strtok(input, ",");
@@ -254,8 +241,11 @@ int user_defined(int ***m, char *input)
                 return 3;
         } else if (token == NULL) {
                 printf("Fehlerhafte Eingabe\n");
+                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorstellen!\n", ROW, COL);
+                printf("Oder geben Sie f oder x ein, um die Eingabe zu beenden oder das Programm abzubrechen\n");
                 return -1;
         }
+
         while (token[i] != '\0') {
                 transition[1][i] = token[i];
                 i++;
@@ -264,24 +254,14 @@ int user_defined(int ***m, char *input)
 
         printf("%s, %s\n\n", transition[0], transition[1]);
 
-
-
-
         /*Eingabe auf Richtigkeit ueberpruefen*/
         if (strtok(NULL, ",") != NULL) {
                 printf("Fehlerhafte Eingabe!\nBitte wiederholen!\n");
-
-                /*for (j = 0; j < 2; j++) {
-                        free(transition[j]);
-                }
-                free(transition);*/
+                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorstellen!\n", ROW, COL);
+                printf("Oder geben Sie f oder x ein, um die Eingabe zu beenden oder das Programm abzubrechen\n");
                 return -1;
         } else if (!isdigit(transition[0][0]) || !isdigit(transition[0][1]) || !isdigit(transition[1][0]) || !isdigit(transition[1][1])) {
                 printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorstellen!\n", ROW, COL);
-                /*for (j = 0; j < 2; j++) {
-                        free(transition[j]);
-                }
-                free(transition);*/
                 return -1;
         }
         t00 = transition[0][0] - '0';
@@ -296,10 +276,6 @@ int user_defined(int ***m, char *input)
         matrix[(zeile - 1) % ROW][(spalte - 1) % COL] = ALIVE;
 
         *m = matrix;
-        /*for (j = 0; j < 2; j++) {
-                free(transition[j]);
-        }
-        free(transition);*/
 
         return 1;
 }

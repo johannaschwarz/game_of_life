@@ -102,7 +102,7 @@ int **int_init(void)
         if (m == NULL) {
                 return NULL;
         }
-        for (i = 0; i < COL; i++) {
+        for (i = 0; i < ROW; i++) {
                 m[i] = calloc(COL, sizeof(int));
                 if (m[i] == NULL) {
                         for (j = 0; j < i; j++) {
@@ -127,7 +127,7 @@ char **char_init(void)
         if (m == NULL) {
                 return NULL;
         }
-        for (i = 0; i < COL; i++) {
+        for (i = 0; i < ROW; i++) {
                 m[i] = malloc(COL * sizeof(char));
                 if (m[i] == NULL) {
                         for (j = 0; j < i; j++) {
@@ -176,7 +176,7 @@ int flush(void)
                 return 0;
         }
 
-        while (getchar() != '\n'){
+        while (c != '\n'){
                 c = getchar();
         }
 

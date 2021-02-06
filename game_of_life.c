@@ -3,9 +3,6 @@
 #include "generationen.h"
 
 
-
-/*eventuell in benutzereingaben user_defined löschen*/
-
 int main (void)
 {
         /*Variablen anlegen*/
@@ -15,6 +12,7 @@ int main (void)
         char input[10];
         srand(time(NULL));
 
+        printf("\nGAME OF LIFE:\n\n");
         /*Speicher fuer die Matrix reservieren*/
         matrix = int_init();
 
@@ -27,7 +25,7 @@ int main (void)
         nutzer_def = main_instruction();
 
         if (nutzer_def == -1) {
-                printf("Programm wird abgebrochen.\n");
+                printf("Programm wird beendet.\n");
                 flush_buff();
                 destroy(matrix);
                 return 0;
@@ -41,6 +39,9 @@ int main (void)
                 } else if (x == 1){
                         nutzer_def = 3;
                 } else if (x == 0){
+                        printf("Programm wird beendet.\n");
+                        flush();
+                        destroy(matrix);
                         return 0;
                 }
 
@@ -82,15 +83,18 @@ int main (void)
                                         flush();
                                         break;
                                 } else if (u == 3) {
-                                        printf("Programm wird abgebrochen.\n");
+                                        printf("Programm wird beendet.\n");
                                         destroy(matrix);
                                         return 0;
                                 }
                         }
+                } else {
+                        flush();
+                        printf("\nFehlerhafte Eingabe\n");
                 }
                 nutzer_def = 3;
                 /*falls Definition durch Nutzer fehlschlaegt*/
-
+                flush();
                 if (x == 0) {
                         nutzer_def = main_instruction();
                 }
@@ -98,7 +102,7 @@ int main (void)
 
         /*Abbruch des Programms*/
         if (nutzer_def == -1) {
-                printf("Programm wird abgebrochen.\n");
+                printf("Programm wird beendet.\n");
                 flush_buff();
                 destroy(matrix);
                 return 0;
@@ -112,6 +116,9 @@ int main (void)
                 } else if (x == 1){
                         nutzer_def = 3;
                 } else if (x == 0){
+                        printf("Programm wird beendet\n");
+                        flush();
+                        destroy(matrix);
                         return 0;
                 }
         }
@@ -140,8 +147,8 @@ int main (void)
                         }
                         printf("\nGeben Sie Enter ein, um die naechste Generation anzuzeigen.\n");
                         printf("Wenn Sie das Programm abbrechen wollen, geben Sie x ein.\n");
-                } else if (c == 'x'){
-                        flush();
+                } else if (c == 'x' && flush() == 0){
+                        printf("Programm wird beendet\n");
                         break;
                 } else {
                         flush();

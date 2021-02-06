@@ -14,14 +14,20 @@ void random_generation(int **m)
         }
 }
 
+void generation_static(int **m)
+{
+        m[20][20] = ALIVE;
+        m[20][21] = ALIVE;
+        m[20][22] = ALIVE;
+        m[19][20] = ALIVE;
+        m[19][21] = ALIVE;
+        m[18][20] = ALIVE;
+
+}
+
 void generation_multiple_spaceships(int **m)
 {
-        int i, j;
-        /*for (i = 0; i < ROW; ++i) {
-                for (j = 0; j < COL; ++j) {
-                        m[i][j] = DEAD;
-                }
-        }*/
+        int j;
 
         /*kleines Spaceship*/
         for (j = 11; j < 15; j++) {
@@ -62,11 +68,7 @@ void generation_multiple_spaceships(int **m)
 void generation_fPentomino(int **m)
 {
         int i, j;
-        /*for (i = 0; i < ROW; ++i) {
-                for (j = 0; j < COL; ++j) {
-                        m[i][j] = DEAD;
-                }
-        }*/
+
 
         for (i = 20; i < 23; ++i) {
                 for (j = 20; j < 23; ++j) {
@@ -81,11 +83,6 @@ void generation_fPentomino(int **m)
 void generation_explosion(int **m)
 {
         int i, j;
-        /*for (i = 0; i < ROW; ++i) {
-                for (j = 0; j < COL; ++j) {
-                        m[i][j] = DEAD;
-                }
-        }*/
 
         for (i = 20; i < 27; i += 6) {
                 for (j = 20; j < 23; ++j){
@@ -106,11 +103,6 @@ void generation_explosion(int **m)
 void generation_glidergun(int **m)
 {
         int i, j;
-        /*for (i = 0; i < ROW; ++i) {
-                for (j = 0; j < COL; ++j) {
-                        m[i][j] = DEAD;
-                }
-        }*/
 
         /*linker 4er Block*/
         for (i = 5; i < 7; ++i) {
@@ -165,12 +157,7 @@ void generation_glidergun(int **m)
 
 void generation_spaceship(int **m)
 {
-        int i, j;
-        /*for (i = 0; i < ROW; ++i) {
-                for (j = 0; j < COL; ++j) {
-                        m[i][j] = DEAD;
-                }
-        }*/
+        int j;
 
         m[10][10] = ALIVE;
         m[10][13] = ALIVE;
@@ -187,11 +174,6 @@ void generation_spaceship(int **m)
 void generation_pulsar (int **m)
 {
         int i, j;
-        /*for (i = 0; i < ROW; ++i) {
-                for (j = 0; j < COL; ++j) {
-                        m[i][j] = DEAD;
-                }
-        }*/
 
         for (i = 10; i < 23; ++i) {
                 if (i != 10 && i != 15 && i != 17 && i != 22) {
@@ -219,11 +201,6 @@ void generation_pulsar (int **m)
 void generation_toad(int **m)
 {
         int i, j, n = 7;
-        /*for (i = 0; i < ROW; ++i) {
-                for (j = 0; j < COL; ++j) {
-                        m[i][j] = DEAD;
-                }
-        }*/
 
         for (i = 7; i < 9; ++i) {
                 for (j = n; j < (n + 3); ++j) {

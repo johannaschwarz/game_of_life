@@ -8,6 +8,7 @@
 #include "funktionen.h"
 
 void random_generation(int **m);
+void generation_static(int **m);
 void generation_multiple_spaceships(int **m);
 void generation_fPentomino(int **m);
 void generation_explosion(int **m);

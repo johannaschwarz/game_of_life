@@ -12,7 +12,7 @@ int main (void)
         char input[10];
         srand(time(NULL));
 
-        printf("\nGAME OF LIFE:\n\n");
+        printf("\nCONWAY'S GAME OF LIFE:\n\n");
         /*Speicher fuer die Matrix reservieren*/
         matrix = int_init();
 

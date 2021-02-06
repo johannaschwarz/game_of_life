@@ -234,9 +234,11 @@ int user_defined(int ***m, char *input)
         transition[0] = strtok(input, ",");
         transition[1] = strtok(NULL, ",");
 
-        if (transition[0][0] == 'f' && transition[0][1] == '\0') {
+        printf("%i, %i\n%i%i\n", transition[0][0], transition[0][1], transition[1][0], transition[1][1]);
+
+        if (transition[0][0] == 'f' && transition[0][1] == '\0' && transition[1] == NULL) {
                 return 2;
-        } else if (transition[0][0] == 'x' && transition[0][1] == '\0') {
+        } else if (transition[0][0] == 'x' && transition[0][1] == '\0' && transition[1] == NULL) {
                 return 3;
         }
 

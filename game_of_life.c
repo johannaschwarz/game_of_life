@@ -1,7 +1,7 @@
 #include "benutzereingaben.h"
 #include "funktionen.h"
 #include "generationen.h"
-
+/*einheitliche fehlermeldungen*/
 
 int main (void)
 {

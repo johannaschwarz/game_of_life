@@ -175,7 +175,7 @@ int main_instruction(void)
         printf("%c steht fuer tote Zellen.\n", DEAD);
         printf("Wollen Sie die Anfangsgeneration selbst definieren? Geben Sie 'y' fuer ja, 'n' fuer nein ein.\n");
         printf("Um das Programm abzubrechen, geben Sie x ein\n");
-        printf("Druecken Sie 2x Enter.\n");
+        printf("Druecken Sie anschließend 2x Enter.\n");
 
         /*Auswertung der Nutzereingabe*/
         c = getchar();

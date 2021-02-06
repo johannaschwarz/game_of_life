@@ -201,11 +201,16 @@ int user_defined(int ***m, char *input)
 {
         int i, j;
         int zeile, spalte;
-        char **transition;
+        char transition[2][6];
         int **matrix;
         int t01, t00, t10, t11;
+        char *token;
         matrix = *m;
 
+        if (strlen(input) != 5 && (*input) != 'f' && (*input) != 'x'){
+                printf("Fehlerhafte Eingabe!\n");
+                return -1;
+        }
         /*Ueberpruefung auf Speicherfehler*/
         if (matrix == NULL) {
                 printf("Speicherfehler\n");
@@ -213,13 +218,15 @@ int user_defined(int ***m, char *input)
         }
 
         /*Initialisieren von transition*/
-        transition = calloc(2, sizeof(char));
-        if (transition == NULL) {
+        /*transition = calloc(2, sizeof(char*));*/
+
+        /*if (transition == NULL) {
                 printf("Speicherfehler\n");
                 return 0;
         }
+
         for (i = 0; i < 2; i++) {
-                transition[i] = calloc(2, sizeof(char));
+                transition[i] = calloc(5, sizeof(char));
                 if (transition[i] == NULL) {
                         for (j = 0; j < i; j++) {
                                 free(transition[j]);
@@ -228,24 +235,42 @@ int user_defined(int ***m, char *input)
                         printf("Speicherfehler\n");
                         return 0;
                 }
-        }
+        }*/
 
         /*Zellenangabe einlesen*/
-        transition[0] = strtok(input, ",");
-        transition[1] = strtok(NULL, ",");
-
-        printf("%i, %i\n%i%i\n", transition[0][0], transition[0][1], transition[1][0], transition[1][1]);
-
-        if (transition[0][0] == 'f' && transition[0][1] == '\0' && transition[1] == NULL) {
-                return 2;
-        } else if (transition[0][0] == 'x' && transition[0][1] == '\0' && transition[1] == NULL) {
-                return 3;
+        token = strtok(input, ",");
+        i = 0;
+        while (token[i] != '\0') {
+                transition[0][i] = token[i];
+                i++;
         }
+        transition[0][i] = '\0';
+
+        token = strtok(NULL, ",");
+        i = 0;
+        if (transition[0][0] == 'f' && transition[0][1] == '\0' && token == NULL) {
+                return 2;
+        } else if (transition[0][0] == 'x' && transition[0][1] == '\0' && token == NULL) {
+                return 3;
+        } else if (token == NULL) {
+                printf("Fehlerhafte Eingabe\n");
+                return -1;
+        }
+        while (token[i] != '\0') {
+                transition[1][i] = token[i];
+                i++;
+        }
+        transition[1][i] = '\0';
+
+        printf("%s, %s\n\n", transition[0], transition[1]);
+
+
 
 
         /*Eingabe auf Richtigkeit ueberpruefen*/
         if (strtok(NULL, ",") != NULL) {
                 printf("Fehlerhafte Eingabe!\nBitte wiederholen!\n");
+
                 /*for (j = 0; j < 2; j++) {
                         free(transition[j]);
                 }

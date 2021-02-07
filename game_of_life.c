@@ -1,7 +1,6 @@
 #include "benutzereingaben.h"
 #include "funktionen.h"
 #include "generationen.h"
-/*einheitliche fehlermeldungen*/
 
 int main (void)
 {
@@ -26,7 +25,6 @@ int main (void)
 
         if (nutzer_def == -1) {
                 printf("Programm wird beendet.\n");
-                flush_buff();
                 destroy(matrix);
                 return 0;
         }
@@ -40,7 +38,6 @@ int main (void)
                         nutzer_def = 3;
                 } else if (x == 0){
                         printf("Programm wird beendet.\n");
-                        flush();
                         destroy(matrix);
                         return 0;
                 }
@@ -49,20 +46,20 @@ int main (void)
 
         /*Nutzerdefinierte Matrix*/
         while (nutzer_def == 1) {
-                /*printf("Definition der Matrix per Textdatei:\n");
-                x = text_defined(&matrix);*/
-                printf("Fuer Definition der Matrix per Textdatei, geben Sie t ein, fuer Definition durch manuelle Eingabe, geben Sie m ein.\n");
+                printf("Fuer Definition der Matrix per Textdatei, geben Sie t ein.\nFuer Definition durch manuelle Eingabe, geben Sie m ein und druecken Sie anschliessend Enter.\n");
                 c = getchar();
 
                 if (c == 't' && !flush()) {
                         x = text_defined(&matrix);
                 } else if (c == 'm' && !flush()){
                         printf("\nGeben Sie die Zellen, die Sie beleben moechten in der Form \nZeile,Spalte \nein.\nBeispiel: \t17,12\n"
-                        "Achten Sie darauf, dass Sie sich ihre Zahlen fuer die Zeilen zwischen 1 und %i und ihre Zahlen fuer die Spalten zwischen 1 und %i befinden, da es andernfalls nicht so aussieht, wie sie es wollten.\n", ROW, COL);
+                        "Achten Sie darauf, dass Sie sich ihre Zahlen fuer die Zeilen zwischen 1 und %i und ihre Zahlen fuer die Spalten zwischen 1 und %i befinden, da es andernfalls nicht so aussieht, wie Sie es wollten.\n", ROW, COL);
                         printf("Sollte die Zahl einstellig sein, dann stellen Sie bitte eine 0 voran (z.B.: 01).\n");
                         printf("Geben Sie immer nur eine Zelle auf einmal ein!\n");
-                        printf("Um dem Programm zu zeigen, dass sie fertig sind, geben sie f ein.\n");
+                        printf("\nUm dem Programm zu zeigen, dass Sie fertig sind, geben Sie f ein.\n");
                         printf("Wenn Sie das Programm komplett beenden moechten, geben Sie x ein.\n");
+                        printf("\nDruecken Sie nach jeder neuen Eingabe Enter.\n");
+                        printf("Geben Sie nach ihrer Eingabe Enter, um sie abzuschliessen.\n");
                         printf("\n\n");
                         while (u == -1 || u == 1) {
                                 printf("Neue Eingabe: ");
@@ -81,6 +78,7 @@ int main (void)
                                         x = 1;
                                         printf("Eingabe abgeschlossen\n");
                                         flush();
+                                        printf("Druecken Sie Enter, um die Annfangsgeneration anzuzeigen.");
                                         break;
                                 } else if (u == 3) {
                                         printf("Programm wird beendet.\n");
@@ -103,7 +101,6 @@ int main (void)
         /*Abbruch des Programms*/
         if (nutzer_def == -1) {
                 printf("Programm wird beendet.\n");
-                flush_buff();
                 destroy(matrix);
                 return 0;
         }
@@ -117,7 +114,6 @@ int main (void)
                         nutzer_def = 3;
                 } else if (x == 0){
                         printf("Programm wird beendet\n");
-                        flush();
                         destroy(matrix);
                         return 0;
                 }
@@ -126,8 +122,8 @@ int main (void)
         /*Anfangsgeneration ausgeben*/
         printf("\nAnfangsgeneration:\n\n");
         print(matrix);
-        printf("\nGeben Sie Enter ein, um die naechste Generation anzuzeigen.\n");
-        printf("Wenn Sie das Programm abbrechen wollen, geben Sie x ein.\n");
+        printf("\nDruecken Sie Enter ein, um die naechste Generation anzuzeigen.\n");
+        printf("Wenn Sie das Programm abbrechen wollen, geben Sie x ein und druecken Sie anschliessend Enter.\n");
 
         /*Folgegenerationen berechnen und ausgeben*/
         i = 0;
@@ -138,7 +134,6 @@ int main (void)
                         /*bei Fehler*/
                         if (survivors == -1) {
                                 printf("Programm wird beendet.\n");
-                                flush_buff();
                                 return 1;
                         } else {
                                 printf("\n%i.te Folgegeneration:\n", i + 1);
@@ -146,21 +141,20 @@ int main (void)
                                 print(matrix);
                         }
                         printf("\nGeben Sie Enter ein, um die naechste Generation anzuzeigen.\n");
-                        printf("Wenn Sie das Programm abbrechen wollen, geben Sie x ein.\n");
+                        printf("Wenn Sie das Programm abbrechen wollen, geben Sie x ein und druecken Sie Enter.\n");
                 } else if (c == 'x' && flush() == 0){
                         printf("Programm wird beendet\n");
                         break;
                 } else {
                         flush();
                         printf("Falsche Eingabe!\n");
-                        printf("\nGeben Sie Enter ein, um die naechste Generation anzuzeigen.\n");
-                        printf("Wenn Sie das Programm abbrechen wollen, geben Sie x ein.\n");
+                        printf("\nDruecken Sie Enter, um die naechste Generation anzuzeigen.\n");
+                        printf("Wenn Sie das Programm abbrechen wollen, geben Sie x ein und druecken Sie Enter.\n");
                 }
                 ++i;
 
         }
 
-        flush_buff();
         destroy(matrix);
         return 0;
 }

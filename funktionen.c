@@ -58,6 +58,7 @@ char *read_string() {
         char c = getchar();
         int i = 0;
         char *string = malloc((i + 1) * sizeof(char));
+
         if (string == NULL) {
                 flush();
                 return NULL;
@@ -73,7 +74,6 @@ char *read_string() {
                 }
         }
         string[i] = '\0';
-        flush();
         return string;
 }
 

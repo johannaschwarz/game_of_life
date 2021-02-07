@@ -8,13 +8,14 @@ int programm_defined(int **m)
         "3 (pulsar)\noder 4 (spaceship)\noder 5 (glidergun)\noder 6 (explosion)\noder 7 (f-Pentomino)"
         "\noder 8 (mulitple spaceships)\noder 9 (static) ein.\n");
         printf("Geben Sie x ein, um abzubrechen.\n");
+        printf("Druecken Sie anschliessend Enter.\n");
         c = getchar();
         if ((getchar() != '\n')|| c > '9' || c < '1') {
                 if (c == 'x') {
                         return 0;
                 }
                 flush();
-                printf("\nEs sind ganze Zahlen zwischen 1 und 9 als Eingabe erlaubt.\n");
+                printf("\nEs sind ganze Zahlen zwischen 1 und 9 als Eingabe erlaubt. Druecken Sie Enter, um fortzufahren.\n");
                 return 2;
         }
 
@@ -59,7 +60,7 @@ int text_defined(int ***m)
         int i, j , n;
 
         /*Einlesen des Namens der Datei*/
-        printf("Geben Sie den Namen der Textdatei ein.\n");
+        printf("Geben Sie den Namen der Textdatei ein und druecken Sie anschliessend Enter\n");
         name = read_string();
 
         /*Bei Fehler*/
@@ -71,14 +72,14 @@ int text_defined(int ***m)
                 flush();
                 return 0;
         }
-        printf("Eingelesener Name: %s\n", name);
+        printf("\nEingelesener Name: %s\nDruecken Sie Enter.\n", name);
 
         /*Strom aus Datei lesen*/
         text = fopen(name, "r");
 
         /*Bei Fehler*/
         if (text == NULL) {
-                printf("Datei konnte nicht geoeffnet werden.\n");
+                printf("Datei konnte nicht geoeffnet werden.  Druecken Sie Enter, um fortzufahren.\n");
                 free(name);
                 destroy_char(transition);
                 destroy(matrix);
@@ -93,7 +94,7 @@ int text_defined(int ***m)
 
                 /*Bei Fehler*/
                 if (i == EOF) {
-                        printf("Fehler beim Auslesen der Datei\n");
+                        printf("Fehler beim Auslesen der Datei!. Druecken Sie Enter, um fortzufahren.\n");
                         flush_buff();
                         free(name);
                         destroy_char(transition);
@@ -111,7 +112,7 @@ int text_defined(int ***m)
 
         /*Falls Datei länger als Matrixgröße:*/
         if (i != EOF || *input != '\0') {
-                printf("zu lange Eingabe!\n");
+                printf("Zu lange Eingabe! Druecken Sie Enter, um fortzufahren.\n");
                 free(name);
                 destroy_char(transition);
                 flush_buff();
@@ -125,7 +126,7 @@ int text_defined(int ***m)
                         if (transition[i][j] == ALIVE || transition[i][j] == DEAD) {
                                 continue;
                         } else {
-                                printf("Fehlerhafte Datei!\n");
+                                printf("Fehlerhafte Datei! Druecken Sie Enter, um fortzufahren.\n");
                                 free(name);
                                 flush_buff();
                                 destroy_char(transition);
@@ -145,7 +146,7 @@ int text_defined(int ***m)
                         } else if (transition[j][n] == DEAD) {
                                 matrix[j][n] = DEAD;
                         } else {
-                                printf("Uebertragung in int-Matrix funktioniert nicht!\n");
+                                printf("Uebertragung in int-Matrix funktioniert nicht! Druecken Sie Enter, um fortzufahren.\n");
                                 free(name);
                                 destroy_char(transition);
                                 destroy(matrix);
@@ -167,33 +168,25 @@ int main_instruction(void)
 
         /*Anleitung fuer Nutzer*/
         printf("\n");
-        printf("Das Spielfeld besteht aus %d Zeilen und %d Reihen\n", ROW, COL);
+        printf("Das Spielfeld besteht aus %d Zeilen und %d Reihen.\n", ROW, COL);
         printf("%c steht fuer lebendige Zellen.\n", ALIVE);
         printf("%c steht fuer tote Zellen.\n", DEAD);
         printf("Wollen Sie die Anfangsgeneration selbst definieren? Geben Sie 'y' fuer ja, 'n' fuer nein ein.\n");
-        printf("Um das Programm abzubrechen, geben Sie x ein\n");
-        printf("Druecken Sie anschliessend 2x Enter.\n");
+        printf("Um das Programm abzubrechen, geben Sie x ein.\n");
+        printf("Druecken Sie anschliessend Enter.\n");
 
         /*Auswertung der Nutzereingabe*/
         c = getchar();
 
-        if (flush() == 1) {
-                printf("Fehlerhafte Eingabe!\n");
-                return main_instruction();
-        }
-
-        if (c == 'y') {
-                flush();
+        if (c == 'y' && !flush()) {
                 return 1;
-        } else if (c == 'n') {
-                flush();
+        } else if (c == 'n' && !flush()) {
                 return 0;
-        } else if (c == 'x') {
-                flush();
+        } else if (c == 'x' && !flush()) {
                 return -1;
         }
 
-        printf("\nFehlerhafte Eingabe!\n");
+        printf("\nFehlerhafte Eingabe! Druecken Sie Enter, um fortzufahren.\n");
         flush();
         return main_instruction();
 
@@ -210,8 +203,9 @@ int user_defined(int ***m, char *input)
 
         if (strlen(input) != 5 && (*input) != 'f' && (*input) != 'x'){
                 printf("Fehlerhafte Eingabe!\n");
-                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorstellen!\n", ROW, COL);
+                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 voranstellen!\n", ROW, COL);
                 printf("Oder geben Sie f oder x ein, um die Eingabe zu beenden oder das Programm abzubrechen\n");
+                printf("Druecken Sie anschliessend Enter, um fortzufahren.\n");
                 return -1;
         }
         /*Ueberpruefung auf Speicherfehler*/
@@ -238,8 +232,9 @@ int user_defined(int ***m, char *input)
                 return 3;
         } else if (token == NULL) {
                 printf("Fehlerhafte Eingabe\n");
-                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorstellen!\n", ROW, COL);
+                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorananstellen!\n", ROW, COL);
                 printf("Oder geben Sie f oder x ein, um die Eingabe zu beenden oder das Programm abzubrechen\n");
+                printf("Druecken Sie nach jeder neuen Eingabe Enter.\n");
                 return -1;
         }
 
@@ -249,16 +244,15 @@ int user_defined(int ***m, char *input)
         }
         transition[1][i] = '\0';
 
-        printf("%s, %s\n\n", transition[0], transition[1]);
-
         /*Eingabe auf Richtigkeit ueberpruefen*/
         if (strtok(NULL, ",") != NULL) {
                 printf("Fehlerhafte Eingabe!\nBitte wiederholen!\n");
-                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorstellen!\n", ROW, COL);
+                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 voanranstellen!\n", ROW, COL);
                 printf("Oder geben Sie f oder x ein, um die Eingabe zu beenden oder das Programm abzubrechen\n");
+                printf("Druecken Sie nach jeder neuen Eingabe Enter.\n");
                 return -1;
         } else if (!isdigit(transition[0][0]) || !isdigit(transition[0][1]) || !isdigit(transition[1][0]) || !isdigit(transition[1][1])) {
-                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorstellen!\n", ROW, COL);
+                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 vorananstellen!\n", ROW, COL);
                 return -1;
         }
         t00 = transition[0][0] - '0';

@@ -11,13 +11,10 @@ int programm_defined(int **m)
         c = getchar();
         if ((getchar() != '\n')|| c > '9' || c < '1') {
                 if (c == 'x') {
-                        printf("Programm wird beendet.\n");
-                        flush_buff();
-                        destroy(m);
                         return 0;
                 }
                 flush();
-                printf("\nEs sind ganze Zahlen zwischen 1 und 7 als Eingabe erlaubt.\n");
+                printf("\nEs sind ganze Zahlen zwischen 1 und 9 als Eingabe erlaubt.\n");
                 return 2;
         }
 
@@ -81,7 +78,7 @@ int text_defined(int ***m)
 
         /*Bei Fehler*/
         if (text == NULL) {
-                printf("Datei konnte nicht geöffnet werden.\n");
+                printf("Datei konnte nicht geoeffnet werden.\n");
                 free(name);
                 destroy_char(transition);
                 destroy(matrix);
@@ -175,13 +172,13 @@ int main_instruction(void)
         printf("%c steht fuer tote Zellen.\n", DEAD);
         printf("Wollen Sie die Anfangsgeneration selbst definieren? Geben Sie 'y' fuer ja, 'n' fuer nein ein.\n");
         printf("Um das Programm abzubrechen, geben Sie x ein\n");
-        printf("Druecken Sie anschließend 2x Enter.\n");
+        printf("Druecken Sie anschliessend 2x Enter.\n");
 
         /*Auswertung der Nutzereingabe*/
         c = getchar();
 
         if (flush() == 1) {
-                printf("Falsche Eingabe 1!\n");
+                printf("Fehlerhafte Eingabe!\n");
                 return main_instruction();
         }
 
@@ -196,7 +193,7 @@ int main_instruction(void)
                 return -1;
         }
 
-        printf("\nFalsche Eingabe 2!\n");
+        printf("\nFehlerhafte Eingabe!\n");
         flush();
         return main_instruction();
 

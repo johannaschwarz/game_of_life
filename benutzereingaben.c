@@ -15,7 +15,7 @@ int programm_defined(int **m)
                         return 0;
                 }
                 flush();
-                printf("\nEs sind ganze Zahlen zwischen 1 und 9 als Eingabe erlaubt. Druecken Sie Enter, um fortzufahren.\n");
+                printf("\nEs sind ganze Zahlen zwischen 1 und 9 (jeweils inklusive) als Eingabe erlaubt. Druecken Sie Enter, um fortzufahren.\n");
                 return 2;
         }
 
@@ -79,7 +79,7 @@ int text_defined(int ***m)
 
         /*Bei Fehler*/
         if (text == NULL) {
-                printf("Datei konnte nicht geoeffnet werden.  Druecken Sie Enter, um fortzufahren.\n");
+                printf("Datei konnte nicht geoeffnet werden. Druecken Sie Enter, um fortzufahren.\n");
                 free(name);
                 destroy_char(transition);
                 destroy(matrix);
@@ -101,14 +101,10 @@ int text_defined(int ***m)
                         destroy(matrix);
                         return 0;
                 }
-
-                /*printf("%s\n", transition[j]);*/
         }
 
         /*Überprüfen, ob text leer ist*/
         i = fscanf(text, "%s", input);
-
-        /*printf("input: %s\n", input);*/
 
         /*Falls Datei länger als Matrixgröße:*/
         if (i != EOF || *input != '\0') {

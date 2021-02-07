@@ -17,6 +17,4 @@ void generation_spaceship(int **m);
 void generation_pulsar(int **m);
 void generation_toad(int **m);
 
-
-
 #endif

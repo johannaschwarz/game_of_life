@@ -165,7 +165,6 @@ void generation_spaceship(int **m)
         m[12][10] = ALIVE;
         m[12][14] = ALIVE;
 
-
         for (j = 11; j < 15; j++) {
                 m[13][j] = ALIVE;
         }

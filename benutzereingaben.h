@@ -18,10 +18,4 @@ int text_defined(int ***m);
 int user_defined(int ***matrix, char *input);
 int main_instruction(void);
 
-
-
-
-
-
-
 #endif

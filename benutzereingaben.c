@@ -16,6 +16,7 @@ int programm_defined(int **m)
                 }
                 flush();
                 printf("\nEs sind ganze Zahlen zwischen 1 und 9 (jeweils inklusive) als Eingabe erlaubt. Druecken Sie Enter, um fortzufahren.\n");
+                flush();
                 return 2;
         }
 

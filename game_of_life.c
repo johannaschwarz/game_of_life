@@ -2,6 +2,9 @@
 #include "funktionen.h"
 #include "generationen.h"
 
+/*bei eingelesener Name bei fehler weniger enter*/
+/*anweisungen übersichtlicher machen*/
+
 int main (void)
 {
         /*Variablen anlegen*/

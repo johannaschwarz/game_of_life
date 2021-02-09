@@ -9,6 +9,7 @@ int programm_defined(int **m)
         "\noder 8 (mulitple spaceships)\noder 9 (static) ein.\n");
         printf("Geben Sie x ein, um abzubrechen.\n");
         printf("Druecken Sie anschliessend Enter.\n");
+        printf("Eingabe: ");
         c = getchar();
         if ((getchar() != '\n')|| c > '9' || c < '1') {
                 if (c == 'x') {
@@ -62,6 +63,7 @@ int text_defined(int ***m)
 
         /*Einlesen des Namens der Datei*/
         printf("Geben Sie den Namen der Textdatei ein und druecken Sie anschliessend Enter\n");
+        printf("Name: ");
         name = read_string();
 
         /*Bei Fehler*/
@@ -73,7 +75,7 @@ int text_defined(int ***m)
                 flush();
                 return 0;
         }
-        printf("\nEingelesener Name: %s\nDruecken Sie Enter.\n", name);
+        printf("\nEingelesener Name: %s\n", name);
 
         /*Strom aus Datei lesen*/
         text = fopen(name, "r");
@@ -84,10 +86,10 @@ int text_defined(int ***m)
                 free(name);
                 destroy_char(transition);
                 destroy(matrix);
-                flush_buff();
                 return 0;
         }
 
+        printf("Druecken Sie Enter.\n");
         /*Speichern der Datei in Zwischenmatrix*/
         for (j = 0; j < ROW; ++j) {
 
@@ -173,7 +175,10 @@ int main_instruction(void)
         printf("Druecken Sie anschliessend Enter.\n");
 
         /*Auswertung der Nutzereingabe*/
+        printf("Eingabe: ");
         c = getchar();
+
+        printf("\n");
 
         if (c == 'y' && !flush()) {
                 return 1;

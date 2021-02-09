@@ -2,7 +2,6 @@
 #include "funktionen.h"
 #include "generationen.h"
 
-/*bei eingelesener Name bei fehler weniger enter*/
 /*anweisungen übersichtlicher machen*/
 
 int main (void)
@@ -49,8 +48,11 @@ int main (void)
 
         /*Nutzerdefinierte Matrix*/
         while (nutzer_def == 1) {
-                printf("Fuer Definition der Matrix per Textdatei, geben Sie t ein.\nFuer Definition durch manuelle Eingabe, geben Sie m ein und druecken Sie anschliessend Enter.\n");
+                printf("Eingabe t: Definition der Matrix per Textdatei.\nEingabe m: Definition durch manuelle Eingabe.\nDruecken Sie anschliessend Enter.\n");
+                printf("Eingabe: ");
                 c = getchar();
+
+                printf("\n");
 
                 if (c == 't' && !flush()) {
                         x = text_defined(&matrix);

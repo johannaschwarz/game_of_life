@@ -70,7 +70,7 @@ int main (void)
                                 printf("Neue Eingabe: ");
                                 status = scanf("%s", input);
                                 if (status == EOF) {
-                                        printf("Fehler beim Einlesen\n");
+                                        printf("Fehler beim Einlesen!\n");
                                         nutzer_def = main_instruction();
                                         continue;
                                 }
@@ -81,9 +81,9 @@ int main (void)
                                         break;
                                 } else if (u == 2) {
                                         x = 1;
-                                        printf("Eingabe abgeschlossen\n");
+                                        printf("Eingabe abgeschlossen.\n");
                                         flush();
-                                        printf("Druecken Sie Enter, um die Annfangsgeneration anzuzeigen.");
+                                        printf("Druecken Sie Enter, um die Anfangsgeneration anzuzeigen.");
                                         break;
                                 } else if (u == 3) {
                                         printf("Programm wird beendet.\n");
@@ -93,7 +93,7 @@ int main (void)
                         }
                 } else {
                         flush();
-                        printf("\nFehlerhafte Eingabe\n");
+                        printf("\nFehlerhafte Eingabe. Druecken Sie Enter, um fortzufahren.\n");
                 }
                 nutzer_def = 3;
                 /*falls Definition durch Nutzer fehlschlaegt*/

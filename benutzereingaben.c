@@ -188,7 +188,7 @@ int main_instruction(void)
                 return -1;
         }
 
-        printf("\nFehlerhafte Eingabe! Druecken Sie Enter, um fortzufahren.\n");
+        printf("\nFehlerhafte Eingabe!\n");
         flush();
         return main_instruction();
 
@@ -212,7 +212,7 @@ int user_defined(int ***m, char *input)
         }
         /*Ueberpruefung auf Speicherfehler*/
         if (matrix == NULL) {
-                printf("Speicherfehler\n");
+                printf("Speicherfehler!\n");
                 return 0;
         }
 

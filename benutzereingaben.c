@@ -89,16 +89,37 @@ int text_defined(int ***m)
                 return 0;
         }
 
-        printf("Druecken Sie Enter.\n");
+
+
         /*Speichern der Datei in Zwischenmatrix*/
         for (j = 0; j < ROW; ++j) {
 
-                i = fscanf(text,"%s", transition[j]);
-
-                /*Bei Fehler*/
-                if (i == EOF) {
+                if (fgets(transition[j], COL + 1, text) == NULL) {
                         printf("Fehler beim Auslesen der Datei!. Druecken Sie Enter, um fortzufahren.\n");
-                        flush_buff();
+                        free(name);
+                        destroy_char(transition);
+                        destroy(matrix);
+                        return 0;
+                }
+                if (strlen(transition[j]) != COL) {
+                        printf("Fehlerhafte Eingabe. Druecken Sie Enter, um fortzufahren.\n");
+                        free(name);
+                        destroy_char(transition);
+                        destroy(matrix);
+                        return 0;
+                }
+                i = fgetc(text);
+                if (i == EOF || (i != '\n' && i != 13)) {
+                        printf("Fehlerhafte Eingabe. Druecken Sie Enter, um fortzufahren.\n");
+                        free(name);
+                        destroy_char(transition);
+                        destroy(matrix);
+                        return 0;
+                }
+
+                i = fgetc(text);
+                if (i != '\n' && i != 13) {
+                        printf("Zu lange Eingabe! Druecken Sie Enter, um fortzufahren.\n");
                         free(name);
                         destroy_char(transition);
                         destroy(matrix);
@@ -110,11 +131,10 @@ int text_defined(int ***m)
         i = fscanf(text, "%s", input);
 
         /*Falls Datei länger als Matrixgröße:*/
-        if (i != EOF || *input != '\0') {
+        if (i != EOF) {
                 printf("Zu lange Eingabe! Druecken Sie Enter, um fortzufahren.\n");
                 free(name);
                 destroy_char(transition);
-                flush_buff();
                 destroy(matrix);
                 return 0;
         }
@@ -127,7 +147,6 @@ int text_defined(int ***m)
                         } else {
                                 printf("Fehlerhafte Datei! Druecken Sie Enter, um fortzufahren.\n");
                                 free(name);
-                                flush_buff();
                                 destroy_char(transition);
                                 destroy(matrix);
                                 return 0;
@@ -154,6 +173,7 @@ int text_defined(int ***m)
                 }
         }
         printf("\n");
+        printf("Druecken Sie Enter.\n");
 
         *m = matrix;
         free(name);
@@ -203,7 +223,8 @@ int user_defined(int ***m, char *input)
         char *token;
         matrix = *m;
 
-        if (strlen(input) != 5 && (*input) != 'f' && (*input) != 'x'){
+
+        if ((strlen(input) != 5 || flush()) && input[0] != 'f' && input[0] != 'x'){
                 printf("Fehlerhafte Eingabe!\n");
                 printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 voranstellen!\n", ROW, COL);
                 printf("Oder geben Sie f oder x ein, um die Eingabe zu beenden oder das Programm abzubrechen\n");
@@ -265,8 +286,16 @@ int user_defined(int ***m, char *input)
         zeile = t00 * 10 + t01;
         spalte = t10 * 10 + t11;
 
+        if (zeile > 50 || spalte > 50) {
+                printf("Fehlerhafte Eingabe!\nBitte wiederholen!\n");
+                printf("\nBitte nur Zahlen zwischen 1 und %i fuer Zeilen und 1 und %i fuer Spalten, in der Form Zeilen,Spalten eingeben und bei einstelligen Zahlen eine 0 voanranstellen!\n", ROW, COL);
+                printf("Oder geben Sie f oder x ein, um die Eingabe zu beenden oder das Programm abzubrechen\n");
+                printf("Druecken Sie nach jeder neuen Eingabe Enter.\n");
+                return -1;
+        }
+
         /*lebende Zelle an Zwischenmatrix uebergeben*/
-        matrix[(zeile - 1) % ROW][(spalte - 1) % COL] = ALIVE;
+        matrix[(zeile - 1)][(spalte - 1)] = ALIVE;
 
         *m = matrix;
 

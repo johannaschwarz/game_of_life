@@ -2,8 +2,6 @@
 #include "funktionen.h"
 #include "generationen.h"
 
-/*anweisungen übersichtlicher machen*/
-
 int main (void)
 {
         /*Variablen anlegen*/
@@ -58,7 +56,7 @@ int main (void)
                         x = text_defined(&matrix);
                 } else if (c == 'm' && !flush()){
                         printf("\nGeben Sie die Zellen, die Sie beleben moechten in der Form \nZeile,Spalte \nein.\nBeispiel: \t17,12\n"
-                        "Achten Sie darauf, dass Sie sich ihre Zahlen fuer die Zeilen zwischen 1 und %i und ihre Zahlen fuer die Spalten zwischen 1 und %i befinden, da es andernfalls nicht so aussieht, wie Sie es wollten.\n", ROW, COL);
+                        "Achten Sie darauf, dass Sie sich ihre Zahlen fuer die Zeilen zwischen 1 und %i und ihre Zahlen fuer die Spalten zwischen 1 und %i befinden.\n", ROW, COL);
                         printf("Sollte die Zahl einstellig sein, dann stellen Sie bitte eine 0 voran (z.B.: 01).\n");
                         printf("Geben Sie immer nur eine Zelle auf einmal ein!\n");
                         printf("\nUm dem Programm zu zeigen, dass Sie fertig sind, geben Sie f ein.\n");
@@ -68,12 +66,22 @@ int main (void)
                         printf("\n\n");
                         while (u == -1 || u == 1) {
                                 printf("Neue Eingabe: ");
-                                status = scanf("%s", input);
-                                if (status == EOF) {
-                                        printf("Fehler beim Einlesen!\n");
-                                        nutzer_def = main_instruction();
-                                        continue;
+                                for (i = 0; i < 5; ++i) {
+                                        status = getchar();
+                                        if (status == EOF) {
+                                                printf("Fehler beim Einlesen!\n");
+                                                nutzer_def = main_instruction();
+                                                continue;
+                                        }
+                                        if (status == '\n') {
+                                                break;
+                                        }
+                                        input[i] = status;
                                 }
+
+                                input[i] = '\0';
+
+
                                 u = user_defined(&matrix, input);
 
                                 if (u == 0) {
@@ -81,7 +89,7 @@ int main (void)
                                         break;
                                 } else if (u == 2) {
                                         x = 1;
-                                        printf("Eingabe abgeschlossen.\n");
+                                        printf("Eingabe abgeschlossen. Druecken Sie Enter.\n");
                                         flush();
                                         printf("Druecken Sie Enter, um die Anfangsgeneration anzuzeigen.");
                                         break;

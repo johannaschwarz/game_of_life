@@ -110,21 +110,13 @@ int text_defined(int ***m)
                 }
                 i = fgetc(text);
                 if (i == EOF || (i != '\n' && i != 13)) {
-                        printf("Fehlerhafte Eingabe. Druecken Sie Enter, um fortzufahren.\n");
+                        printf("Fehlerhafte Eingabe 2. Druecken Sie Enter, um fortzufahren.\n");
                         free(name);
                         destroy_char(transition);
                         destroy(matrix);
                         return 0;
                 }
 
-                i = fgetc(text);
-                if (i != '\n' && i != 13) {
-                        printf("Zu lange Eingabe! Druecken Sie Enter, um fortzufahren.\n");
-                        free(name);
-                        destroy_char(transition);
-                        destroy(matrix);
-                        return 0;
-                }
         }
 
         /*Überprüfen, ob text leer ist*/

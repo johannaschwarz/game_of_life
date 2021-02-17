@@ -113,7 +113,7 @@ int text_defined(int ***m)
                         break;
                 }
                 if (i == EOF || (i != '\n' && i != 13)) {
-                        printf("Fehlerhafte Eingabe 2. Druecken Sie Enter, um fortzufahren.\n");
+                        printf("Fehlerhafte Eingabe. Druecken Sie Enter, um fortzufahren.\n");
                         free(name);
                         destroy_char(transition);
                         destroy(matrix);

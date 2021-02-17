@@ -109,6 +109,9 @@ int text_defined(int ***m)
                         return 0;
                 }
                 i = fgetc(text);
+                if (j == ROW - 1 && i == EOF) {
+                        break;
+                }
                 if (i == EOF || (i != '\n' && i != 13)) {
                         printf("Fehlerhafte Eingabe 2. Druecken Sie Enter, um fortzufahren.\n");
                         free(name);
